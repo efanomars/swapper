@@ -1,0 +1,101 @@
+Source: swapper
+Priority: optional
+Maintainer: Stefano Marsili <efanomars@gmx.ch>
+Build-Depends: debhelper (>= 9)
+             , cmake
+             , python3
+             , doxygen
+             , graphviz
+             , libstmm-games-dev (>= @STMM_SWAPPER_REQ_STMM_GAMES_VERSION@)
+             , libstmm-games-xml-game-dev (>= @STMM_SWAPPER_XML_REQ_STMM_GAMES_XML_GAME_VERSION@)
+             , libstmm-games-xml-gtk-dev (>= @SWAPPER_REQ_STMM_GAMES_XML_GTK_VERSION@)
+             , libstmm-input-gtk-dm-dev (>= @SWAPPER_REQ_STMM_INPUT_GTK_DM_VERSION@)
+Standards-Version: 3.9.8
+Section: libs
+Homepage: @STMMI_WEBSITE_SECTION@/swapper
+Vcs-Git: https://www.gitlab.com/efanomars/swapper.git
+#Vcs-Browser: https://www.gitlab.com/efanomars/swapper.git
+
+
+#---------------------------------------------------------------------
+Package: libstmm-swapper@STMM_SWAPPER_MAJOR_VERSION@
+Architecture: any
+Depends: libstmm-games@STMM_SWAPPER_REQ_STMM_GAMES_MAJOR_VERSION@ (>= @STMM_SWAPPER_REQ_STMM_GAMES_VERSION@)
+       , ${shlibs:Depends}, ${misc:Depends}
+Recommends: swapper
+Description: Swap tiles to remove them - model
+ Remove tiles by swapping them. Many variations, single and multi-player.
+ .
+ This C++ library provides the game's model events needed by the
+ swapper executable.
+
+Package: libstmm-swapper-dev
+Section: libdevel
+Architecture: any
+Depends: libstmm-swapper@STMM_SWAPPER_MAJOR_VERSION@ (= ${binary:Version})
+       , libstmm-games-dev (>= @STMM_SWAPPER_REQ_STMM_GAMES_VERSION@)
+       , ${misc:Depends}
+Recommends: swapper
+Description: Swap tiles to remove them - model (develop)
+ Remove tiles by swapping them. Many variations, single and multi-player.
+ .
+ This library provides the model events needed by the
+ swapper executable.
+ .
+ This package contains the development headers for the library found in
+ libstmm-swapper@STMM_SWAPPER_MAJOR_VERSION@.
+ .
+ The minimum requirement is a C++14 compiler.
+
+
+#---------------------------------------------------------------------
+Package: libstmm-swapper-xml@STMM_SWAPPER_XML_MAJOR_VERSION@
+Architecture: any
+Depends: libstmm-swapper@STMM_SWAPPER_MAJOR_VERSION@ (>= @STMM_SWAPPER_XML_REQ_STMM_SWAPPER_VERSION@)
+       , libstmm-games-xml-game@STMM_SWAPPER_XML_REQ_STMM_GAMES_XML_GAME_MAJOR_VERSION@ (>= @STMM_SWAPPER_XML_REQ_STMM_GAMES_XML_GAME_VERSION@)
+       , ${shlibs:Depends}, ${misc:Depends}
+Recommends: swapper
+Description: Swap tiles to remove them - xml definitions
+ Remove tiles by swapping them. Many variants, single and multi-player.
+ .
+ This C++ library provides the xml definitions of events defined in
+ libstmm-swapper@STMM_SWAPPER_MAJOR_VERSION@.
+
+Package: libstmm-swapper-xml-dev
+Section: libdevel
+Architecture: any
+Depends: libstmm-swapper-xml@STMM_SWAPPER_XML_MAJOR_VERSION@ (= ${binary:Version})
+       , libstmm-swapper-dev (>= @STMM_SWAPPER_XML_REQ_STMM_SWAPPER_VERSION@)
+       , libstmm-games-xml-game-dev (>= @STMM_SWAPPER_XML_REQ_STMM_GAMES_XML_GAME_VERSION@)
+       , ${misc:Depends}
+Recommends: swapper
+Description: Swap tiles to remove them - xml definitions (develop)
+ Remove tiles by swapping them. Many variants, single and multi-player.
+ .
+ This library provides the xml definitions of events defined in
+ libstmm-swapper@STMM_SWAPPER_MAJOR_VERSION@.
+ .
+ This package contains the development headers for the library found in
+ libstmm-swapper-xml@STMM_SWAPPER_XML_MAJOR_VERSION@.
+ .
+ The minimum requirement is a C++14 compiler.
+
+
+#---------------------------------------------------------------------
+Package: swapper
+Architecture: any
+Depends: libstmm-swapper-xml@STMM_SWAPPER_XML_MAJOR_VERSION@ (>= @SWAPPER_REQ_STMM_SWAPPER_XML_VERSION@)
+       , libstmm-games-xml-gtk@SWAPPER_REQ_STMM_GAMES_XML_GTK_MAJOR_VERSION@ (>= @SWAPPER_REQ_STMM_GAMES_XML_GTK_VERSION@)
+       , libstmm-input-gtk-dm@SWAPPER_REQ_STMM_INPUT_GTK_DM_MAJOR_VERSION@ (>= @SWAPPER_REQ_STMM_INPUT_GTK_DM_VERSION@)
+       , ${shlibs:Depends}, ${misc:Depends}
+Suggests: libstmm-input-gtk-bt
+        , libstmm-input-gtk-xi
+Description: Swap tiles to remove them
+ Remove tiles by color or explosions.
+ .
+ Features:
+   - many variants
+   - bombs
+   - multiple players collaborating or competing
+   - junk tiles
+

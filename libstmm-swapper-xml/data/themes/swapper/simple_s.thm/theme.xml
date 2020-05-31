@@ -1,0 +1,164 @@
+<?xml version="1.0" ?>
+<!--
+ * Copyright © 2019-2020  Stefano Marsili, <stemars@gmx.ch>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this program; if not, see <http://www.gnu.org/licenses/>
+-->
+<Theme _ign_version="1" internalName="Simple-S">
+	<Description>Simple - Swapper game theme</Description>
+	<!--Supports>jointris</Supports-->
+	<Supports>swapper</Supports>
+	<Extends>Simple</Extends>
+	<Images>
+		<Image imgId="Darkening" imgFile="darkening.svg"/>
+	</Images>
+	<Sounds>
+		<Sound sndId="BrokenChain" sndFile="bonc.mp3"/>
+		<Sound sndId="T00" sndFile="n00.mp3"/>
+		<Sound sndId="T01" sndFile="n01.mp3"/>
+		<Sound sndId="T02" sndFile="n02.mp3"/>
+		<Sound sndId="T03" sndFile="toc.mp3"/>
+		<Sound sndId="T04" sndFile="tac.mp3"/>
+		<Sound sndId="T05" sndFile="tic.mp3"/>
+		<Sound sndId="T06" sndFile="hat.mp3"/>
+		<Sound sndId="T07" sndFile="n07.mp3"/>
+		<Sound sndId="T08" sndFile="n08.mp3"/>
+		<Sound sndId="T09" sndFile="n09.mp3"/>
+		<Sound sndId="T10" sndFile="n10.mp3"/>
+		<Sound sndId="T11" sndFile="n11.mp3"/>
+		<Sound sndId="T12" sndFile="n12.mp3"/>
+		<Sound sndId="T13" sndFile="n13.mp3"/>
+		<Sound sndId="T14" sndFile="n14.mp3"/>
+		<Sound sndId="T15" sndFile="n15.mp3"/>
+		<Sound sndId="T16" sndFile="n16.mp3"/>
+		<Sound sndId="T17" sndFile="n17.mp3"/>
+		<Sound sndId="T18" sndFile="n18.mp3"/>
+		<Sound sndId="T19" sndFile="n19.mp3"/>
+		<Sound sndId="T20" sndFile="n20.mp3"/>
+		<Sound sndId="T21" sndFile="n21.mp3"/>
+		<Sound sndId="T22" sndFile="n22.mp3"/>
+		<Sound sndId="T23" sndFile="n23.mp3"/>
+		<Sound sndId="T24" sndFile="n24.mp3"/>
+		<Sound sndId="T25" sndFile="n25.mp3"/>
+		<Sound sndId="T26" sndFile="n26.mp3"/>
+		<Sound sndId="T27" sndFile="n27.mp3"/>
+		<Sound sndId="T28" sndFile="n28.mp3"/>
+		<Sound sndId="T29" sndFile="n29.mp3"/>
+		<Sound sndId="T30" sndFile="n30.mp3"/>
+		<Sound sndId="Junk" sndFile="junk.mp3"/>
+		<Sound sndId="DangerStart" sndFile="dangerstart.mp3"/>
+		<Sound sndId="DangerEnd"   sndFile="dangerend.mp3"/>
+	</Sounds>
+	<Animations>
+		<ImageSequence name="DestroyExplosion" anonymousAnimations="false">
+			<Image imgFile="explosion1.svg" duration="50" priority="70"/>
+			<Image imgFile="explosion2.svg" duration="50" priority="80"/>
+			<Image imgFile="explosion3.svg" duration="100" priority="100"/>
+			<Image imgFile="explosion2.svg" duration="150" priority="70"/>
+			<Image imgFile="explosion4.svg" duration="200" priority="80"/>
+		</ImageSequence>
+		<ExplosionIsImageSequence name="View:DestroyBoardTile" imageSequenceName="DestroyExplosion"
+							anonymousAnimations="false" _ign_widthPerc="200" _ign_heightPerc="200"/>
+	</Animations>
+	<ImageArrays>
+		<FileArray arrayId="swapperLP" imgFile="swapperleftplayer%%.svg" sobstStr="%%" fromInt="0" toInt="4"/>
+		<FileArray arrayId="swapperRP" imgFile="swapperrightplayer%%.svg" sobstStr="%%" fromInt="0" toInt="4"/>
+	</ImageArrays>
+	<Assigns>
+		<Assign idAss="swapperLP" arrayId="swapperLP">
+			<Chars charName="SWAPPER:LEFT"/>
+			<Players fromPlayer="-1" toPlayer="3"/>
+		</Assign>
+		<Assign idAss="swapperRP" arrayId="swapperRP">
+			<Chars charName="SWAPPER:RIGHT"/>
+			<Players fromPlayer="-1" toPlayer="3"/>
+		</Assign>
+	</Assigns>
+	<DrawBlockTile>
+		<Conditional>
+			<If><Char charNames="SWAPPER:LEFT,SWAPPER:RIGHT,SQUARSOR:SEL"/></If>
+				<Select>
+					<Case idAss="swapperLP">
+						<SelectedImage/>
+					</Case>
+					<Case idAss="swapperRP">
+						<SelectedImage/>
+					</Case>
+					<Case idAss="squarsorP">
+						<SelectedImage/>
+					</Case>
+				</Select>
+			<Elsif><Char charName="BOMB"/></Elsif>
+				<Mask imgFile="squaremask.svg">
+					<Fill/>
+					<Image imgFile="bomb.svg"/>
+				</Mask>
+			<Else/>
+				<Mask imgFile="squaremask.svg">
+					<Fill/>
+					<Text sizeFactor="100%"/>
+				</Mask>
+		</Conditional>
+	</DrawBlockTile>
+	<DrawBoardTile>
+		<Conditional>
+			<If><Char charName="BOMB"/></If>
+				<Rotate aniName="TILEANI:REMOVING"      _ign_invert="true" _ign_aniFactor="2%">
+					<SelectAni aniName="TILEANI:MATERIALIZING">
+						<Case from="0">
+							<Rotate aniName="TILEANI:MATERIALIZING" invert="false"  _ign_aniFactor="50%">
+							<Fade aniName="TILEANI:MATERIALIZING" invert="true"  _ign_aniFactor="50%">
+							<Grow aniName="TILEANI:MATERIALIZING" invert="false"  _ign_aniFactor="50%">
+								<Mask imgFile="squaremask.svg">
+									<Fill/>
+									<Image imgFile="bomb.svg"/>
+								</Mask>
+							</Grow>
+							</Fade>
+							</Rotate>
+						</Case>
+						<Default>
+							<Mask imgFile="squaremask.svg">
+								<Fill/>
+								<Image imgFile="bomb.svg"/>
+							</Mask>
+						</Default>
+					</SelectAni>
+				</Rotate>
+			<Else/>
+				<Rotate aniName="TILEANI:REMOVING"      _ign_invert="true" _ign_aniFactor="2%">
+					<SelectAni aniName="TILEANI:MATERIALIZING">
+						<Case from="0">
+							<Rotate aniName="TILEANI:MATERIALIZING" invert="false"  _ign_aniFactor="50%">
+							<Fade aniName="TILEANI:MATERIALIZING" invert="true"  _ign_aniFactor="50%">
+							<Grow aniName="TILEANI:MATERIALIZING" invert="false"  _ign_aniFactor="50%">
+								<Mask imgFile="squaremask.svg">
+									<Fill/>
+									<Text sizeFactor="100%"/>
+								</Mask>
+							</Grow>
+							</Fade>
+							</Rotate>
+						</Case>
+						<Default>
+							<Mask imgFile="squaremask.svg">
+								<Fill/>
+								<Text sizeFactor="100%"/>
+							</Mask>
+						</Default>
+					</SelectAni>
+				</Rotate>
+		</Conditional>
+	</DrawBoardTile>
+</Theme>

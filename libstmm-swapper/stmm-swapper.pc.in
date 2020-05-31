@@ -1,0 +1,17 @@
+# stmm-swapper pkg-config source file
+
+prefix=@STMMI_INSTALL_PREFIX@
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: stmm-swapper
+Description: C++ games library - swapper events
+Version: @STMM_SWAPPER_VERSION@
+URL: http://www.efanomars.com/games/swapper
+# Beware! The space between the library name and the comparison (>=) is necessary!
+Requires: stmm-games >= @STMM_SWAPPER_REQ_STMM_GAMES_VERSION@
+Conflicts:
+Libs: -L${libdir} -lstmm-swapper
+Cflags: -I${includedir}/stmm-swapper -I${includedir}
+

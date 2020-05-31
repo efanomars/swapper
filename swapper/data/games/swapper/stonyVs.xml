@@ -1,0 +1,596 @@
+<?xml version="1.0" ?>
+<!--
+ * Copyright © 2019-2020  Stefano Marsili, <stemars@gmx.ch>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this program; if not, see <http://www.gnu.org/licenses/>
+-->
+<Game _ign_version="1" internalName="StonyVs"   initialInterval="100" difficulty="120">
+	<Description>Stony for two players</Description>
+	<Description>Align 3 or more tiles of the same color.</Description>
+	<Description>The more tiles you remove, the more junk</Description>
+	<Description>is thrown to your opponent.</Description>
+	<Description>The stones are unswappable.</Description>
+	<Description>If you try to swap them the swapper changes</Description>
+	<Description>shape for 3 seconds.</Description>
+	<Description>The bombs explode when swapped.</Description>
+	<!-- Inspired by BlockAttack game for Linux-->
+	<Author name="Stefano Marsili"  email="stemars@gmx.ch" website="https://efanomars.com"/>
+	<Constraints levels="2" teams="2" matesPerTeamMax="1"/>
+	<Variables>
+		<Var name="Points" owner="TEAM" initial="0"/>
+		<Var name="Clock" owner="TEAM" initial="0" addTime="true" timeBase="SEC" timeFormat="MIN_SEC" />
+		<Var name="Speed" owner="TEAM" initial="0"/>
+		<Var name="Chain" owner="TEAM" initial="0"/>
+		<Var name="MaxChain" owner="TEAM" initial="0"/>
+
+		<Var name="AbsoluteTime" owner="GAME" initial="0" addTime="true" timeBase="MILLISEC"/>
+		<Var name="TopWait" owner="TEAM" initial="0"/>
+	</Variables>
+	<HighscoresDefinition maxScores="20">
+		<Element description="Points"  varName="Points"/>
+		<Element description="Time"    varName="Clock"/>
+		<Element description="Chain"   varName="MaxChain"/>
+		<Eligibility varName="Points" min="1"/>
+		<Discriminator type="HUMAN_TEAM_MATES"/>
+	</HighscoresDefinition>
+	<Blocks>
+		<Block internalName="TheSwapper">
+			<Bricks>
+				<Tile idChar="A" charName="SWAPPER:LEFT"/>
+				<Tile idChar="B" charName="SWAPPER:RIGHT"/>
+			</Bricks>
+			<Shapes emptyId=" " wh="2" seqs="2">
+				<Shape>
+					<Line>AB</Line>
+				</Shape>
+				<Shape>
+					<Line>A B</Line>
+				</Shape>
+			</Shapes>
+		</Block>
+	</Blocks>
+	<Level initialFallEachTicks="21">
+		<Board width="6" height="13">
+			<Overlays>
+				<Tiles>
+					<Tile idChar="A" colorPal="2" />
+					<Tile idChar="B" colorPal="3" />
+					<Tile idChar="C" colorPal="4" />
+				</Tiles>
+				<Overlay x="0" y="11" emptyId=" " transparentId=".">
+					<Line>ACBCAB</Line>
+					<Line>BACBCA</Line>
+				</Overlay>
+			</Overlays>
+		</Board>
+		<Show height="12"/>
+	</Level>
+	<Layout>
+		<BackgroundWidget image="Background1" alignHoriz="FILL" alignVert="FILL" expandHoriz="true" expandVert="true">
+			<BoxWidget vertical_0="false" vertical_1="true" _ign_switchable="true">
+				<BoxWidget vertical="false" _ign_switchable="false">
+					<BoxWidget vertical="true"  _ign_switchable="false">
+						<VarWidget title="Score" team="0" variable="Points" refWFactor="49%" refHFactor="10%"
+									valueDigits="8"/>
+						<VarWidget title="Time" team="0" variable="Clock" refWFactor="0.25" refHFactor="0.1"
+									valueDigits="4"/>
+						<VarWidget title="Speed" team="0" variable="Speed" refWFactor="0.25" refHFactor="0.1"
+									valueDigits="3"/>
+						<VarWidget title="Max Chain" team="0" variable="MaxChain" refWFactor="0.25" refHFactor="0.1"
+									valueDigits="3"/>
+						<VarWidget title="Chain" team="0" variable="Chain" refWFactor="0.25" refHFactor="0.1"
+									valueDigits="3"/>
+					</BoxWidget>
+					<BoxWidget vertical="true" _ign_switchable="false">
+						<ProgressWidget variable="TopWait" team="0" refWFactor="100%" refHFactor="5%" _ign_marks="30,60"/>
+						<TransparentWidget team="0" refWFactor="100%" refHFactor="2%"/>
+						<LevelShowWidget team="0"/>
+					</BoxWidget>
+				</BoxWidget>
+				<TransparentWidget refWFactor="0.1" refHFactor="0.05" alignVert_0="FILL" expandVert_0="true" alignHoriz_1="FILL" expandHoriz_1="true"/>
+				<BoxWidget vertical="false" _ign_switchable="false" invertChildren_1="true">
+					<BoxWidget vertical="true" _ign_switchable="false">
+						<ProgressWidget variable="TopWait" team="1" refWFactor="100%" refHFactor="5%" _ign_marks="30,60"/>
+						<TransparentWidget team="1" refWFactor="100%" refHFactor="2%"/>
+						<LevelShowWidget team="1"/>
+					</BoxWidget>
+					<BoxWidget vertical="true" _ign_switchable="false">
+						<VarWidget title="Score" team="1" variable="Points" refWFactor="49%" refHFactor="10%"
+									valueDigits="8"/>
+						<VarWidget title="Time" team="1" variable="Clock" refWFactor="0.25" refHFactor="0.1"
+									valueDigits="4"/>
+						<VarWidget title="Speed" team="1" variable="Speed" refWFactor="0.25" refHFactor="0.1"
+									valueDigits="3"/>
+						<VarWidget title="Max Chain" team="1" variable="MaxChain" refWFactor="0.25" refHFactor="0.1"
+									valueDigits="3"/>
+						<VarWidget title="Chain" team="1" variable="Chain" refWFactor="0.25" refHFactor="0.1"
+									valueDigits="3"/>
+					</BoxWidget>
+				</BoxWidget>
+			</BoxWidget>
+		</BackgroundWidget>
+	</Layout>
+	<Events>
+		<SysEvent evId="EVID-END" start="1001001001" type="LEVEL_FAILED" finishIfPossible="false" createTexts="false">
+			<Listener groupName="TEAM_FINISHED" event="EVID-ST-GameOver" msg="0"/>
+			<Listener groupName="TEAM_FINISHED" event="EVID-SWAPPER" msgName="PAUSE"/>
+			<Listener groupName="TEAM_FINISHED" event="EVID-CC-FINITO" msgName="CUMUL_ADD_TO_LEFT_COMPARE"/>
+			<Listener groupName="TEAM_FINISHED" event="EVID-SE-7" msg="777"/>
+			<Listener groupName="TEAM_FINISHED" event="EVID-SND-GAME-OVER" msgName="PLAY_FREE">
+				<ExistIf>
+					<Option name="SoundEnabled" team="" value="true"/>
+				</ExistIf>
+			</Listener>
+		</SysEvent>
+		<SoundEvent evId="EVID-SND-GAME-OVER" name="GameOver" listenerRealtive="true">
+			<AttrIf team="">
+				<Option name="PerPlayerSound" team="" value="false"/>
+			</AttrIf>
+			<ExistIf>
+				<Option name="SoundEnabled" team="" value="true"/>
+			</ExistIf>
+		</SoundEvent>
+		<ShowTextEvent evId="EVID-ST-GameOver" type="Faded" fontSizeInTiles="2.0" duration="-1" 
+						posX="0" posY="8" width="6" height="2">
+			<Line>Game Over</Line>
+		</ShowTextEvent>
+
+		<SenderEvent evId="EVID-SE-7">
+			<Filter>
+				<Input msg="9997" toValue="3" _ign_newValue="suppressed"/>
+				<Input msg="9997" toValue="4" newValue="1"/>
+				<Input msg="9997" toValue="5" newValue="2"/>
+				<Input msg="9997" toValue="6" newValue="3"/>
+				<Input msg="9997" toValue="7" newValue="4"/>
+				<Input msg="9997" toValue="8" newValue="5"/>
+				<Input msg="9997" fromValue="9" newValue="6"/>
+			</Filter>
+		</SenderEvent>
+		<ReceiverEvent start="0">
+			<Filter>
+				<Input msg="777" newValue="1"/>
+			</Filter>
+			<Listener group="777" event="EVID-CC-FINITO" msgName="CUMUL_ADD_TO_LEFT_COMPARE"/>
+			<Listener group="9997" event="EVID-TOPJUNK" msgName="DROP_JUNK"/>
+			<!--Listener group="9997" event="EVID-LOG-JUNK" msg="1232123"/-->
+		</ReceiverEvent>
+		<_Ign_LogEvent evId="EVID-LOG-JUNK" toStdOut="true" tag="4949494"/>
+
+		<CumulCmpEvent evId="EVID-CC-FINITO" addTotTeamsToRight="true" onCompare="UNCHANGED">
+			<Filter>
+				<Input msgName="CUMUL_ADD_TO_LEFT_COMPARE" newValue="1"/>
+			</Filter>
+			<Listener groupName="COMPARED" event="EVID-VAR-RANK" msgName="VAR_GET_VALUE"/>
+		</CumulCmpEvent>
+		<VariableEvent evId="EVID-VAR-RANK" name="__HighscoreRank">
+			<Filter>
+				<Input msgName="VAR_GET_VALUE" toValue="-1" _ign_newValue="suppressed"/>
+				<Input msgName="VAR_GET_VALUE" fromValue="1" _ign_newValue="suppressed"/>
+			</Filter>
+			<Listener groupName="VAR_VALUE" event="EVID-ST-RANK" msg="0"/>
+		</VariableEvent>
+		<ShowTextEvent evId="EVID-ST-RANK" type="Faded" fontSizeInTiles="2.5" duration="-1" >
+			<Line>Rank: %%iv%%</Line>
+		</ShowTextEvent>
+
+		<TopJunkEvent start="0" evId="EVID-TOPJUNK" materializingTicks="6" waitTicksFrom="1" waitTicksTo="3">
+			<TileGen>
+				<Random prob="10" fromColorPal="2" toColorPal="7" char="X"/>
+				<Random prob="30" fromColorPal="2" toColorPal="7"/>
+			</TileGen>
+			<Listener groupName="PLACED_JUNK" event="EVID-SND-PLACED-JUNK" msgName="PLAY_FREE">
+				<ExistIf>
+					<Option name="SoundEnabled" team="" value="true"/>
+				</ExistIf>
+			</Listener>
+		</TopJunkEvent>
+		<SoundEvent evId="EVID-SND-PLACED-JUNK" name="Junk" listenerRealtive="true">
+			<AttrIf team="">
+				<Option name="PerPlayerSound" team="" value="false"/>
+			</AttrIf>
+			<ExistIf>
+				<Option name="SoundEnabled" team="" value="true"/>
+			</ExistIf>
+		</SoundEvent>
+
+		<BackgroundEvent evId="EVID-DARKEN" start="0" posZ="1" posX="0" posY="12" width="6" height="1">
+			<Image imgId="Darkening" width="6" height="1"/>
+		</BackgroundEvent>
+
+		<VariableEvent evId="EVID-VAR-CLOCK" name="Clock" start="0">
+			<Listener groupName="VAR_CHANGED" event="EVID-CC-CLOCK-20SEC" msgName="CUMUL_SET_LEFT_COMPARE"/>
+		</VariableEvent>
+
+		<AlarmsEvent evId="EVID-ALARM-INITIAL" start="1">
+			<SetMillisec value="100" repeat="6"/>
+			<Listener groupName="TIMEOUT" event="EVID-SCROLLER" msg="55555"/>
+			<!--Listener groupName="TIMEOUT" event="EVID-LOG-ALARM-INITIAL" msg="12121212"/-->
+			<Listener groupName="TIMEOUT" event="EVID-ALARM-INITIAL" msgName="ALARMS_NEXT"/>
+		</AlarmsEvent>
+		<!--LogEvent evId="EVID-LOG-ALARM-INITIAL" toStdOut="true" tag="9992999"/-->
+
+		<CumulCmpEvent evId="EVID-CC-CLOCK-20SEC" _ign_DESC="fires a 0 for inputs 5 25 45 65 ...">
+			<Filter>
+				<Input msgName="CUMUL_SET_LEFT_COMPARE" fromValue="0" valueMod="20" valueAdd="-5"/>
+			</Filter>
+			<Listener groupName="COMPARED_EQUAL" event="EVID-VAR-SPEED" msgName="INC" />
+		</CumulCmpEvent>
+
+		<VariableEvent evId="EVID-VAR-SPEED" name="Speed" start="0">
+			<Listener groupName="VAR_CHANGED" event="EVID-SELECT-SLICES" msg="0" _ign_DESC="Decrease slices"/>
+			<Listener groupName="VAR_CHANGED" event="EVID-SPEED" msg="0" _ign_DESC="Increase speed"/>
+			<Listener groupName="VAR_CHANGED" event="EVID-SCROLLER" msgName="NEXT_NEW_ROW_GEN" _ign_DESC="Increase tile colors"/>
+			<Listener groupName="VAR_VALUE" event="EVID-CC-POINTS-CALC" msgName="CUMUL_MULT_LEFT"/>
+		</VariableEvent>
+
+		<SelectEvent evId="EVID-SELECT-SLICES">
+			<Filter><!-- newMsg becomes the value sent to listeners-->
+				<Input toValue="2"  newMsg="24"/>
+				<Input toValue="4"  newMsg="23"/>
+				<Input toValue="6"  newMsg="22"/>
+				<Input toValue="8"  newMsg="21"/>
+				<Input toValue="10" newMsg="20"/>
+				<Input toValue="12" newMsg="19"/>
+				<Input toValue="14" newMsg="18"/>
+				<Input toValue="16" newMsg="17"/>
+				<Input toValue="18" newMsg="16"/>
+				<Input toValue="20" newMsg="15"/>
+				<Input toValue="22" newMsg="14"/>
+				<Input toValue="24" newMsg="13"/>
+				<Input toValue="26" newMsg="12"/>
+				<Input toValue="28" newMsg="10"/>
+				<Input toValue="30" newMsg="9"/>
+				<Input toValue="32" newMsg="8"/>
+				<Input toValue="34" newMsg="7"/>
+				<Input toValue="36" newMsg="6"/>
+				<Input toValue="38" newMsg="5"/>
+				<Input toValue="40" newMsg="4"/>
+				<Input toValue="42" newMsg="3"/>
+				<Input              newMsg="2"/>
+			</Filter>
+			<Listener event="EVID-SCROLLER" msgName="SET_SLICES"/>
+		</SelectEvent>
+
+		<SpeedEvent evId="EVID-SPEED" start="0">
+			<Change repeat="1" _ign_level="1">
+				<Set interval="60" fallEachTicks="6"/>
+			</Change>
+			<Change _ign_level="2-...">
+				<Inc interval="-1"/>
+			</Change>
+			<!--Listener groupName="CHANGED" event="EVID-ST-Faster" msg="0"/-->
+		</SpeedEvent>
+
+		<GravityEvent evId="EVID-GRA" start="0" priority="-10"/>
+
+		<DestroyerEvent evId="EVID-DESTROYER" areaY="0" areaH="12">
+		</DestroyerEvent>
+
+		<SwapperEvent evId="EVID-SWAPPER" start="0" areaY="0" areaH="12" posY="11" block="TheSwapper">
+			<Immovable><Char char="X"/></Immovable>
+			<Swapped><Char charName="BOMB"/></Swapped>
+			<Filter>
+				<Input msgName="SET_SHAPE" newValue="1" />
+				<Input msg="444444444" newMsgName="SET_SHAPE" newValue="0" />
+			</Filter>
+			<Listener groupName="PUSH_ROW" event="EVID-SCROLLER" msgName="PUSH_ROW"/>
+			<Listener groupName="IMMOVABLE" event="EVID-ALARM-3-SEC" msgName="ALARMS_RESTART"/>
+			<Listener groupName="IMMOVABLE" event="EVID-SWAPPER" msgName="SET_SHAPE"/>
+			<Listener groupName="SWAPPED_0" event="EVID-DESTROYER" msgName="DESTROY_R1"/>
+			<Listener groupName="SWAPPED_0" event="EVID-SND-TOP-DESTROYED" msgName="PLAY_FREE">
+				<ExistIf>
+					<Option name="SoundEnabled" team="" value="true"/>
+				</ExistIf>
+			</Listener>
+		</SwapperEvent>
+		<AlarmsEvent evId="EVID-ALARM-3-SEC">
+			<SetMillisec value="3000" repeat="10000000"/>
+			<Listener groupName="TIMEOUT" event="EVID-SWAPPER" msg="444444444"/>
+			<Listener groupName="TIMEOUT" event="EVID-ALARM-3-SEC" msgName="ALARMS_FINISH"/>
+		</AlarmsEvent>
+
+		<ScrollerEvent evId="EVID-SCROLLER" start="0" repeat="100000000" step="4" slices="24"
+						topNotEmptyWaitTicks="10" topNotEmptyWaitMillisec="3000">
+			<Filter>
+				<Input msgName="PAUSE_TICKS" valueMult="7" valueAdd="15" _ign_DESC="waits for nTilesRemoved * 7 + 15 ticks" />
+				<Input msgName="PUSH_ROW" valueAdd="0"/>
+				<Input msgName="NEXT_NEW_ROW_GEN" value="40" newValue="1"  _ign_newValue="increase colors"/>
+				<Input msgName="NEXT_NEW_ROW_GEN" value="45" newValue="1"  _ign_newValue="increase colors"/>
+				<Input msgName="NEXT_NEW_ROW_GEN" value="48" newValue="1"  _ign_newValue="increase colors"/>
+				<Input msgName="NEXT_NEW_ROW_GEN" value="50" newValue="1"  _ign_newValue="increase colors"/>
+				<Input msgName="NEXT_NEW_ROW_GEN"  _ign_newValue="suppressed"/>
+				<Input msg="77777" newMsgName="PAUSE_TICKS" newValue="10000000"/>
+				<Input msg="55555" newMsgName="PUSH_ROW" newValue="1"/>
+			</Filter>
+			<NewRows>
+				<RandomTiles>
+					<Random prob="100" fromColorPal="2" toColorPal="7"/>
+					<Random prob="9"   fromColorPal="2" toColorPal="7" char="X"/>
+					<Random prob="2"   fromColorPal="2" toColorPal="7" charName="BOMB"/>
+				</RandomTiles>
+				<RandomTiles>
+					<Random prob="100" fromColorPal="2" toColorPal="8"/>
+					<Random prob="9"   fromColorPal="2" toColorPal="8" char="X"/>
+					<Random prob="2"   fromColorPal="2" toColorPal="8" charName="BOMB"/>
+				</RandomTiles>
+				<RandomTiles>
+					<Random prob="100" fromColorPal="2" toColorPal="9"/>
+					<Random prob="9"   fromColorPal="2" toColorPal="9" char="X"/>
+					<Random prob="2"   fromColorPal="2" toColorPal="9" charName="BOMB"/>
+				</RandomTiles>
+				<RandomTiles>
+					<Random prob="100" fromColorPal="2" toColorPal="9"/>
+					<Random prob="19"  fromColorPal="2" toColorPal="9" char="X"/>
+					<Random prob="2"   fromColorPal="2" toColorPal="9" charName="BOMB"/>
+				</RandomTiles>
+				<RandomTiles>
+					<Random prob="100" fromColorPal="2" toColorPal="9"/>
+					<Random prob="29"  fromColorPal="2" toColorPal="9" char="X"/>
+					<Random prob="2"   fromColorPal="2" toColorPal="9" charName="BOMB"/>
+				</RandomTiles>
+				<NewRow>
+					<Rand leaveEmpty="0" randomId="0"/>
+				</NewRow>
+				<NewRow>
+					<Rand leaveEmpty="0" randomId="1"/>
+				</NewRow>
+				<NewRow>
+					<Rand leaveEmpty="0" randomId="2"/>
+				</NewRow>
+				<NewRow>
+					<Rand leaveEmpty="0" randomId="3"/>
+				</NewRow>
+				<NewRow>
+					<Rand leaveEmpty="0" randomId="4"/>
+				</NewRow>
+			</NewRows>
+			<Listener groupName="TOP_NOT_EMPTY_START" event="EVID-BG-ALERT" msgName="CONTROL_RESTART"/>
+			<Listener groupName="TOP_NOT_EMPTY_START" event="EVID-ALARM-ALERT" msgName="ALARMS_RESTART"/>
+			<Listener groupName="TOP_NOT_EMPTY_START" event="EVID-TOPJUNK" msgName="PAUSE"/>
+			<Listener groupName="TOP_NOT_EMPTY_START" event="EVID-VAR-TOPWAIT" msgName="SET_VALUE"/>
+			<Listener groupName="TOP_NOT_EMPTY_START" event="EVID-SND-DANGER-START" msgName="PLAY_FREE">
+				<ExistIf>
+					<Option name="SoundEnabled" team="" value="true"/>
+				</ExistIf>
+			</Listener>
+			<Listener groupName="TOP_NOT_EMPTY_END"   event="EVID-VAR-TOPWAIT" msgName="SET_VALUE"/>
+			<Listener groupName="TOP_NOT_EMPTY_END"   event="EVID-TOPJUNK" msgName="RESUME"/>
+			<Listener groupName="TOP_NOT_EMPTY_END"   event="EVID-ALARM-ALERT" msgName="ALARMS_FINISH"/>
+			<Listener groupName="TOP_NOT_EMPTY_END"   event="EVID-BG-ALERT" msgName="CONTROL_STOP"/>
+			<Listener groupName="TOP_NOT_EMPTY_END"   event="EVID-SND-DANGER-END" msgName="PLAY_FREE">
+				<ExistIf>
+					<Option name="SoundEnabled" team="" value="true"/>
+				</ExistIf>
+			</Listener>
+			<Listener groupName="TOP_NOT_EMPTY_TICK"  event="EVID-VAR-TOPWAIT" msgName="SET_VALUE"/>
+			<Listener groupName="TOP_DESTROYED" event="EVID-SCROLLER" msg="77777"/>
+			<Listener groupName="TOP_DESTROYED" event="EVID-DQ-END" msgName="QUEUE_VALUE">
+				<ExistIf>
+					<Option name="SoundEnabled" team="" value="true"/>
+				</ExistIf>
+			</Listener>
+			<Listener groupName="TOP_DESTROYED" event="EVID-DQ-END" msgName="QUEUE_VALUE">
+				<ExistIf>
+					<Option name="SoundEnabled" team="" value="true"/>
+				</ExistIf>
+			</Listener>
+			<Listener groupName="TOP_DESTROYED" event="EVID-DQ-END" msgName="QUEUE_VALUE">
+				<ExistIf>
+					<Option name="SoundEnabled" team="" value="true"/>
+				</ExistIf>
+			</Listener>
+			<Listener groupName="TOP_DESTROYED" event="EVID-END" msg="0"/>
+		</ScrollerEvent>
+
+		<AlarmsEvent evId="EVID-ALARM-ALERT">
+			<SetTicks value="7" repeat="10000000"/>
+			<Listener groupName="TIMEOUT" event="EVID-BG-ALERT" msgName="IMG_NEXT"/>
+			<Listener groupName="TIMEOUT" event="EVID-ALARM-ALERT" msgName="ALARMS_NEXT"/>
+		</AlarmsEvent>
+
+		<BackgroundEvent evId="EVID-BG-ALERT" posZ="1" posX="0" posY="0" width="6" height="1">
+			<Image imgId="Darkening" width="6" height="1"/>
+			<Image width="6" height="1"/>
+		</BackgroundEvent>
+
+		<VariableEvent evId="EVID-VAR-TOPWAIT" name="TopWait"  start="0">
+		</VariableEvent>
+
+		<SoundEvent evId="EVID-SND-DANGER-START" name="DangerStart" listenerRealtive="true" volume="30">
+			<AttrIf team="">
+				<Option name="PerPlayerSound" team="" value="false"/>
+			</AttrIf>
+			<ExistIf>
+				<Option name="SoundEnabled" team="" value="true"/>
+			</ExistIf>
+		</SoundEvent>
+		<SoundEvent evId="EVID-SND-DANGER-END" name="DangerEnd" listenerRealtive="true" volume="30">
+			<AttrIf team="">
+				<Option name="PerPlayerSound" team="" value="false"/>
+			</AttrIf>
+			<ExistIf>
+				<Option name="SoundEnabled" team="" value="true"/>
+			</ExistIf>
+		</SoundEvent>
+
+		<DelayedQueueEvent evId="EVID-DQ-END" intervalMillisecs="350">
+			<ExistIf>
+				<Option name="SoundEnabled" team="" value="true"/>
+			</ExistIf>
+			<Listener groupName="VALUE" event="EVID-SND-TOP-DESTROYED"   msgName="PLAY_FREE"/>
+		</DelayedQueueEvent>
+
+		<SoundEvent evId="EVID-SND-TOP-DESTROYED" name="Explosion" listenerRealtive="true" volume="30">
+			<AttrIf team="">
+				<Option name="PerPlayerSound" team="" value="false"/>
+			</AttrIf>
+			<ExistIf>
+				<Option name="SoundEnabled" team="" value="true"/>
+			</ExistIf>
+		</SoundEvent>
+
+		<ColorRemoverEvent evId="EVID-COLOR-REMOVER" start="10" minAdj="3" horizVert="true"
+							areaH="12" deleteAfter="5">
+			<Listener groupName="REMOVED" event="EVID-SCROLLER" msgName="PAUSE_TICKS"/>
+			<Listener groupName="REMOVED" event="EVID-CC-POINTS" msgName="CUMUL_SET_LEFT_COMPARE"/>
+			<Listener groupName="REMOVED" event="EVID-VAR-REMOVE-INTERVAL" msgName="VAR_GET_VALUE"/>
+			<Listener groupName="REMOVED" event="EVID-SE-7" msg="9997"/>
+			<Listener groupName="REMOVED" event="EVID-ARRAY-SOUND-NRS" msgName="ARRAY_GET">
+				<ExistIf>
+					<Option name="SoundEnabled" team="" value="true"/>
+				</ExistIf>
+			</Listener>
+		</ColorRemoverEvent>
+
+		<ArrayEvent evId="EVID-ARRAY-SOUND-NRS" valueType="SOUND" _ign_DESC="removed lines to sound name index">
+			<ExistIf>
+				<Option name="SoundEnabled" team="" value="true"/>
+			</ExistIf>
+			<Filter>
+				<Input msgName="ARRAY_GET" toValue="2" _ign_newValue="suppressed"/>
+				<Input msgName="ARRAY_GET" valueAdd="-3"/>
+			</Filter>
+			<Dim size="8"/>
+			<Array els="T03,T04,T05,T06,T07,T08,T09,T10"/>
+			<Listener groupName="ARRAY_RESULT" event="EVID-DQ-NRS"   msgName="QUEUE_VALUE"/>
+		</ArrayEvent>
+		<DelayedQueueEvent evId="EVID-DQ-NRS" intervalMillisecs="150">
+			<ExistIf>
+				<Option name="SoundEnabled" team="" value="true"/>
+			</ExistIf>
+			<Listener groupName="VALUE" event="EVID-SND-NR"   msgName="PLAY_FREE_IDX"/>
+		</DelayedQueueEvent>
+		<SoundEvent evId="EVID-SND-NR" listenerRealtive="true">
+			<AttrIf team="">
+				<Option name="PerPlayerSound" team="" value="false"/>
+			</AttrIf>
+			<ExistIf>
+				<Option name="SoundEnabled" team="" value="true"/>
+			</ExistIf>
+			<!--Listener groupName="SOUND_FINISHED"    event="EVID-SHOW-FINISHED" msg="0"/-->
+		</SoundEvent>
+
+		<CumulCmpEvent evId="EVID-CC-POINTS" _ign_DESC1="removed lines to points">
+			<Filter>
+				<Input msgName="CUMUL_SET_LEFT_COMPARE" value="3" newValue="500"/>
+				<Input msgName="CUMUL_SET_LEFT_COMPARE" value="4" newValue="1000"/>
+				<Input msgName="CUMUL_SET_LEFT_COMPARE" value="5" newValue="3000"/>
+				<Input msgName="CUMUL_SET_LEFT_COMPARE" value="6" newValue="8000"/>
+				<Input msgName="CUMUL_SET_LEFT_COMPARE" value="7" newValue="15000"/>
+				<Input msgName="CUMUL_SET_LEFT_COMPARE" value="8" newValue="30000"/>
+				<Input msgName="CUMUL_SET_LEFT_COMPARE" value="9" newValue="100000"/>
+				<Input msgName="CUMUL_SET_LEFT_COMPARE" value="10" newValue="200000"/>
+			</Filter>
+			<Listener groupName="COMPARED" event="EVID-CC-POINTS-CALC" msgName="CUMUL_SET_LEFT"/>
+			<Listener groupName="COMPARED" event="EVID-VAR-SPEED"      msgName="VAR_GET_VALUE"/>
+			<Listener groupName="COMPARED" event="EVID-CC-POINTS-CALC" msgName="CUMUL_ADD_TO_LEFT_COMPARE"/>
+		</CumulCmpEvent>
+
+		<CumulCmpEvent evId="EVID-CC-POINTS-CALC"  _ign_DESC1="= points + (points / 50) * (Speed - 1)">
+			<Filter>
+				<Input msgName="CUMUL_SET_LEFT" valueDiv="50"/>
+				<Input msgName="CUMUL_MULT_LEFT" valueAdd="-1"/>
+			</Filter>
+			<Listener groupName="COMPARED" event="EVID-VAR-POINTS" msgName="ADD_VALUE"/>
+		</CumulCmpEvent>
+
+		<VariableEvent evId="EVID-VAR-POINTS" name="Points" start="0">
+			<Filter>
+				<!--Input msgName="ADD_VALUE" value="3" newValue="500"/>
+				<Input msgName="ADD_VALUE" value="4" newValue="1000"/>
+				<Input msgName="ADD_VALUE" value="5" newValue="2000"/>
+				<Input msgName="ADD_VALUE" value="6" newValue="4000"/>
+				<Input msgName="ADD_VALUE" value="7" newValue="8000"/>
+				<Input msgName="ADD_VALUE" value="8" newValue="16000"/>
+				<Input msgName="ADD_VALUE" value="9" newValue="32000"/>
+				<Input msgName="ADD_VALUE" value="10" newValue="64000"/-->
+				<Input msg="88888" toValue="500"  newMsgName="ADD_VALUE" valueDiv="-2"      valueAdd="500" _ign_range="500(   0ms) to 250( 500ms)"/>
+				<Input msg="88888" toValue="1000" newMsgName="ADD_VALUE" valuePercent="-30" valueAdd="400" _ign_range="250( 500ms) to 100(1000ms)"/>
+				<Input msg="88888" toValue="2000" newMsgName="ADD_VALUE" valueDiv="-10"     valueAdd="200" _ign_range="100(1000ms) to   0(2000ms)"/>
+				<Input msg="88888"                newMsgName="ADD_VALUE" newValue="0"                      _ign_range="  0(2000ms) to ..."/>
+				<Input msg="88884" toValue="0"   _ign_DESC="suppress"/>
+				<Input msg="88884" fromValue="1" newMsgName="ADD_VALUE" valueMult="1500" _ign_DESC="" />
+			</Filter>
+		</VariableEvent>
+
+		<VariableEvent evId="EVID-VAR-REMOVE-INTERVAL" name="AbsoluteTime">
+			<_Ign_Listener groupName="VAR_VALUE" event="EVID-LOG-REMOVE-INTERVAL" msg="3333"/>
+			<Listener groupName="VAR_VALUE" event="EVID-CC-CHECK-INTERVAL" msgName="CUMUL_SET_LEFT_COMPARE"/>
+			<Listener groupName="VAR_VALUE" event="EVID-2-SEC" msgName="ALARMS_REDO_CURRENT"/>
+		</VariableEvent>
+		<_Ign_LogEvent evId="EVID-LOG-REMOVE-INTERVAL" toStdOut="true" tag="4949494"/>
+
+		<CumulCmpEvent evId="EVID-CC-CHECK-INTERVAL" onCompare="COPY_LEFT_TO_RIGHT" initialRight="-100000"
+						_ign_DESC="calc elapsed since last remove">
+			<_Ign_Listener groupName="COMPARED" event="EVID-LOG-CHECK-INTERVAL" msg="4444"/>
+			<Listener groupName="COMPARED" event="EVID-VAR-CHAIN" msgName="SET_VALUE"/>
+			<Listener groupName="COMPARED" event="EVID-VAR-POINTS" msg="88888"/>
+		</CumulCmpEvent>
+		<_Ign_LogEvent evId="EVID-LOG-CHECK-INTERVAL" toStdOut="true" tag="3939393"/>
+
+		<VariableEvent evId="EVID-VAR-CHAIN" name="Chain">
+			<Filter>
+				<Input msgName="SET_VALUE" toValue="2000" newMsgName="ADD_VALUE" newValue="1" _ign_DESC="inc 2 sec chain"/>
+				<Input msgName="SET_VALUE" fromValue="2001"                      newValue="0" _ign_DESC="2 sec chain broken"/>
+				<Input msgName="MUL_BY_VALUE"             newMsgName="SET_VALUE" newValue="0" _ign_DESC="2 sec chain broken"/>
+			</Filter>
+			<_Ign_Listener groupName="VAR_CHANGED" event="EVID-LOG-CHAIN" msg="66662"/>
+			<Listener groupName="VAR_CHANGED" event="EVID-VAR-POINTS" msg="88884"/>
+			<Listener groupName="VAR_CHANGED" event="EVID-CC-MAXCHAIN" msgName="CUMUL_SET_LEFT_COMPARE"/>
+		</VariableEvent>
+		<_Ign_LogEvent evId="EVID-LOG-CHAIN" toStdOut="true" tag="2929292"/>
+
+		<CumulCmpEvent evId="EVID-CC-MAXCHAIN" _ign_DESC="keep the max in right">
+			<Filter>
+				<Input msgName="CUMUL_SET_LEFT_COMPARE" toValue="0" _ign_DESC="suppress"/>
+				<Input msgName="CUMUL_ADD_TO_RIGHT" toValue="0" _ign_DESC="suppress"/>
+			</Filter>
+			<_Ign_Listener groupName="COMPARED" event="EVID-LOG-MAXCHAIN-CC" msg="66662"/>
+			<Listener groupName="COMPARED" event="EVID-VAR-MAXCHAIN" msgName="ADD_VALUE"/>
+			<Listener groupName="COMPARED" event="EVID-CC-MAXCHAIN" msgName="CUMUL_ADD_TO_RIGHT"/>
+		</CumulCmpEvent>
+		<_Ign_LogEvent evId="EVID-LOG-MAXCHAIN-CC" toStdOut="true" tag="222222"/>
+
+		<VariableEvent evId="EVID-VAR-MAXCHAIN" name="MaxChain">
+			<Filter>
+				<Input msgName="ADD_VALUE" toValue="0" _ign_DESC="suppress"/>
+			</Filter>
+			<_Ign_Listener groupName="VAR_CHANGED" event="EVID-LOG-MAXCHAIN" msg="66663"/>
+		</VariableEvent>
+		<_Ign_LogEvent evId="EVID-LOG-MAXCHAIN" toStdOut="true" tag="333333"/>
+
+
+		<AlarmsEvent evId="EVID-2-SEC">
+			<SetMillisec value="2000" repeat="10000000"/>
+			<_Ign_Listener groupName="TIMEOUT" event="EVID-LOG-2-SEC" msg="5555"/>
+			<Listener groupName="TIMEOUT" event="EVID-VAR-CHAIN" msgName="MUL_BY_VALUE"/>
+			<Listener groupName="TIMEOUT" event="EVID-SND-BROKEN-CHAIN" msgName="PLAY_FREE">
+				<ExistIf>
+					<Option name="SoundEnabled" team="" value="true"/>
+				</ExistIf>
+			</Listener>
+		</AlarmsEvent>
+		<_Ign_LogEvent evId="EVID-LOG-2-SEC" toStdOut="true" tag="1919191"/>
+
+		<SoundEvent evId="EVID-SND-BROKEN-CHAIN" name="BrokenChain" listenerRealtive="true">
+			<AttrIf team="">
+				<Option name="PerPlayerSound" team="" value="false"/>
+			</AttrIf>
+			<ExistIf>
+				<Option name="SoundEnabled" team="" value="true"/>
+			</ExistIf>
+		</SoundEvent>
+	</Events>
+
+</Game>

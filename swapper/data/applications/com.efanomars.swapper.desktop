@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Swapper
+Icon=swapper
+Type=Application
+Terminal=false
+Categories=Game;
+Keywords=swap;tiles;multi-player;blob;stmm-input;stmm-games;play;
+Comment=Swap tiles to remove them
+Exec=swapper
+GenericName=Swapper
+Name[en_US]=Swapper
