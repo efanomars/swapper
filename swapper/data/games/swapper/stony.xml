@@ -16,11 +16,9 @@
  * License along with this program; if not, see <http://www.gnu.org/licenses/>
 -->
 <Game _ign_version="1" internalName="Stony"   initialInterval="100"  testing="false" difficulty="40">
-	<Description>Stubbo</Description>
 	<Description>Align 3 or more tiles of the same color.</Description>
 	<Description>The stones are unswappable.</Description>
-	<Description>If you try to swap them the swapper changes</Description>
-	<Description>shape for 3 seconds.</Description>
+	<Description>If you try to swap them the swapper changes shape for 3 seconds.</Description>
 	<Description>The bombs explode when swapped.</Description>
 	<!-- Inspired by BlockAttack game for Linux-->
 	<Author name="Stefano Marsili"  email="stemars@gmx.ch" website="https://efanomars.com"/>
