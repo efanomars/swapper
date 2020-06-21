@@ -78,7 +78,8 @@ protected:
 		const std::string sAppVersion = "323.232";
 		const bool bNoSoundMode = bNoSound;
 		const bool bTestMode = true;
-		swapperSetupStdConfig(m_refStdConfig, m_refFakeDM, sSwapper, sAppVersion, bNoSoundMode, bTestMode);
+		const bool bTouch = false;
+		swapperSetupStdConfig(m_refStdConfig, m_refFakeDM, sSwapper, sAppVersion, bNoSoundMode, bTestMode, bTouch);
 
 		std::vector<File> aGameFiles;
 		{

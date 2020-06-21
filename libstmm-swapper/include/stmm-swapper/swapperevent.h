@@ -1,5 +1,5 @@
 /*
- * Copyright © 2019  Stefano Marsili, <stemars@gmx.ch>
+ * Copyright © 2019-2020  Stefano Marsili, <stemars@gmx.ch>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -83,6 +83,7 @@ public:
 	void trigger(int32_t nMsg, int32_t nValue, Event* p0TriggeringEvent) noexcept override;
 	//LevelBlock
 	void handleKeyActionInput(const shared_ptr<KeyActionEvent>& refEvent) noexcept override;
+	void handleInput(const shared_ptr<stmi::Event>& refEvent) noexcept override;
 	void handleTimer() noexcept override;
 	int32_t blockPosZ() const noexcept override;
 	void fall() noexcept override;
@@ -136,13 +137,15 @@ public:
 
 protected:
 	void onScrolled(Direction::VALUE eDir) noexcept override;
+	void onPlayerChanged() noexcept override;
 private:
 	void commonInit() noexcept;
 	void initBlock() noexcept;
 	void privateOnRemove() noexcept;
 	bool move(Direction::VALUE eDir) noexcept;
+	bool moveToXY(double fNewX, double fNewY) noexcept;
 	bool canPlaceShapeInArea(int32_t nShapeId, int32_t& nDeltaX, int32_t& nDeltaY) const noexcept;
-	bool swapBlock(int32_t nBlockPosY) noexcept;
+	bool swapBlock() noexcept;
 
 	enum SWAPPER_EVENT_STATE
 	{
@@ -153,15 +156,17 @@ private:
 	};
 private:
 	LocalInit m_oData;
-
+	bool m_bSubshowMode;
 	// Set to true if initial position of first shape of block doesn't fit into area.
-	// In that case wapping is disabled
+	// In that case swapping is disabled
 	bool m_bNoSwap;
 	int32_t m_nTileAniRemovingIndex;
 
 	SWAPPER_EVENT_STATE m_eState;
 	int32_t m_nTickStarted;
 	bool m_bPaused;
+
+	int32_t m_nLastLevelPlayer;
 
 	CircularBuffer<int32_t> m_oKeys; // Value: nKeyActionId
 

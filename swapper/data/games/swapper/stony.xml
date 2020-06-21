@@ -74,24 +74,37 @@
 	</Level>
 	<Layout>
 		<BackgroundWidget image="Background1" alignHoriz="FILL" alignVert="FILL" expandHoriz="true" expandVert="true">
-			<BoxWidget vertical_0="true" vertical_1="false" _ign_switchable="true">
-				<BoxWidget vertical="true" _ign_switchable="false">
-					<ProgressWidget variable="TopWait" team="0" refWFactor="100%" refHFactor="5%" _ign_marks="30,60"/>
-					<TransparentWidget team="0" refWFactor="100%" refHFactor="2%"/>
-s					<LevelShowWidget/>
+			<BoxWidget vertical="true" _ign_switchable="false">
+				<BoxWidget vertical_0="true" vertical_1="false" _ign_switchable="true">
+					<BoxWidget vertical="true" _ign_switchable="false">
+						<ProgressWidget variable="TopWait" team="0" refWFactor="100%" refHFactor="5%" _ign_marks="30,60"/>
+						<TransparentWidget team="0" refWFactor="100%" refHFactor="2%"/>
+						<LevelShowWidget/>
+					</BoxWidget>
+					<BoxWidget vertical="false" vertical_1="true" _ign_switchable="true">
+						<VarWidget title="Score" team="0" variable="Points" refWFactor="49%" refHFactor="10%"
+									valueDigits="8"/>
+						<VarWidget title="Time" team="0" variable="Clock" refWFactor="0.25" refHFactor="0.1"
+									valueDigits="4"/>
+						<VarWidget title="Speed" team="0" variable="Speed" refWFactor="0.25" refHFactor="0.1"
+									valueDigits="3"/>
+						<VarWidget title="Max Chain" team="0" variable="MaxChain" refWFactor="0.25" refHFactor="0.1"
+									valueDigits="3"/>
+						<VarWidget title="Chain" team="0" variable="Chain" refWFactor="0.25" refHFactor="0.1"
+									valueDigits="3"/>
+					</BoxWidget>
 				</BoxWidget>
-				<BoxWidget vertical="false" vertical_1="true" _ign_switchable="true">
-					<VarWidget title="Score" team="0" variable="Points" refWFactor="49%" refHFactor="10%"
-								valueDigits="8"/>
-					<VarWidget title="Time" team="0" variable="Clock" refWFactor="0.25" refHFactor="0.1"
-								valueDigits="4"/>
-					<VarWidget title="Speed" team="0" variable="Speed" refWFactor="0.25" refHFactor="0.1"
-								valueDigits="3"/>
-					<VarWidget title="Max Chain" team="0" variable="MaxChain" refWFactor="0.25" refHFactor="0.1"
-								valueDigits="3"/>
-					<VarWidget title="Chain" team="0" variable="Chain" refWFactor="0.25" refHFactor="0.1"
-								valueDigits="3"/>
-				</BoxWidget>
+				<TransparentWidget refHFactor="0.03" refWFactor="1.0">
+					<ExistIf>
+						<Option name="TouchMode" value="true"/>
+					</ExistIf>
+				</TransparentWidget>
+				<ActionWidget text="PUSH" _ign_textHeight="1.5" expandHoriz="true" alignHoriz="FILL" _ign_icon="IconDown"
+								refWFactor="0.5" refHFactor="0.15" event="EVID-SCROLLER" msgName="PUSH_ROW">
+					<ExistIf>
+						<Option name="TouchMode" value="true"/>
+					</ExistIf>
+				</ActionWidget>
 			</BoxWidget>
 		</BackgroundWidget>
 	</Layout>
@@ -195,7 +208,7 @@ s					<LevelShowWidget/>
 			<Listener groupName="TIMEOUT" event="EVID-ALARM-3-SEC" msgName="ALARMS_FINISH"/>
 		</AlarmsEvent>
 
-		<ScrollerEvent evId="EVID-SCROLLER" start="0" repeat="100000000" step="4" slices="24"
+		<ScrollerEvent evId="EVID-SCROLLER" publish="true" start="0" repeat="100000000" step="4" slices="24"
 						topNotEmptyWaitTicks="10" topNotEmptyWaitMillisec="3000">
 			<Filter>
 				<Input msgName="PAUSE_TICKS" valueMult="7" valueAdd="15" _ign_DESC="waits for nTilesRemoved * 7 + 15 ticks" />

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2019  Stefano Marsili, <stemars@gmx.ch>
+ * Copyright © 2019-2020  Stefano Marsili, <stemars@gmx.ch>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,9 @@
 #include <stmm-games/utile/tilecoords.h>
 #include <stmm-games/util/util.h>
 #include <stmm-games/util/namedindex.h>
+
+#include <stmm-input/xyevent.h>
+#include <stmm-input-ev/pointerevent.h>
 
 #include <tuple>
 #include <string>
@@ -82,6 +85,8 @@ void SwapperEvent::commonInit() noexcept
 	const AppConfig& oAppConfig = *oLevel.prefs().getAppConfig();
 	NamedIndex& oTileAnisIndex = oLevel.getNamed().tileAnis();
 
+	m_bSubshowMode = oLevel.subshowMode();
+
 	m_nKeyActionLeft = oAppConfig.getKeyActionId(s_sKeyActionLeft);
 	m_nKeyActionRight = oAppConfig.getKeyActionId(s_sKeyActionRight);
 	m_nKeyActionUp = oAppConfig.getKeyActionId(s_sKeyActionUp);
@@ -107,6 +112,7 @@ void SwapperEvent::commonInit() noexcept
 	m_eState = SWAPPER_EVENT_STATE_ACTIVATE;
 	m_nTickStarted = -1;
 	m_bPaused = false;
+	m_nLastLevelPlayer = -1;
 }
 void SwapperEvent::initBlock() noexcept
 {
@@ -362,6 +368,35 @@ void SwapperEvent::handleKeyActionInput(const shared_ptr<KeyActionEvent>& refEve
 	}
 	m_oKeys.write(nKeyAction);
 }
+void SwapperEvent::handleInput(const shared_ptr<stmi::Event>& refEvent) noexcept
+{
+	const stmi::Event::Class& oC = refEvent->getEventClass();
+	if (! oC.isXYEvent()) {
+		return; //--------------------------------------------------------------
+	}
+	const auto p0XYEvent = static_cast<stmi::XYEvent*>(refEvent.get());
+	if (p0XYEvent->getXYGrabType() != stmi::XYEvent::XY_GRAB) {
+		return; //--------------------------------------------------------------
+	}
+	if (oC == stmi::PointerEvent::getClass()) {
+		const auto p0PointerEvent = static_cast<stmi::PointerEvent*>(refEvent.get());
+		if (p0PointerEvent->getButton() != stmi::PointerEvent::s_nFirstButton) {
+			informListeners(LISTENER_GROUP_PUSH_ROW, 1);
+			return; //----------------------------------------------------------
+		}
+	}
+	// Shape can be anything, the click cell is where the
+	// top left of the bounding box should be placed on the board
+	// X..     ..X.
+	// ..X     X...
+	//         ...X
+	const bool bMoved = moveToXY(p0XYEvent->getX(), p0XYEvent->getY());
+	if (bMoved && ! m_bNoSwap) {
+		swapBlock();
+	}
+
+//std::cout << "SwapperEvent::handleInput pos=(" << p0XYEvent->getX() << "," << p0XYEvent->getY() << ")" << '\n';
+}
 void SwapperEvent::handleTimer() noexcept
 {
 //std::cout << "SwapperEvent(" << getId() << ")::handleTimer(" << level().game().gameElapsed() << ")"<< '\n';
@@ -372,8 +407,7 @@ void SwapperEvent::handleTimer() noexcept
 	const double fDisplY = oShowPos.m_fY - nShowY;
 	const NPoint oPos = LevelBlock::blockPos();
 	const NPoint oBricksMinPos = LevelBlock::blockBricksMinPos();
-	const int32_t nBlockPosY = oPos.m_nY;
-	const int32_t nBlockMinY = nBlockPosY + oBricksMinPos.m_nY;
+	const int32_t nBlockMinY = oPos.m_nY + oBricksMinPos.m_nY;
 	if ((nBlockMinY == 0) && (fDisplY > 0)) {
 		// This class works with no scrolling or a scroller that just sets
 		// the ShowY to values >= 0.0 and < 1.0
@@ -400,19 +434,19 @@ void SwapperEvent::handleTimer() noexcept
 		move(Direction::DOWN);
 	} else if (nKeyAction == m_nKeyActionSwap) {
 		if (! m_bNoSwap) {
-			swapBlock(nBlockPosY);
+			swapBlock();
 		}
 	} else if (nKeyAction == m_nKeyActionPushRow) {
 		informListeners(LISTENER_GROUP_PUSH_ROW, 1);
 	}
 }
-bool SwapperEvent::swapBlock(int32_t nBlockPosY) noexcept
+bool SwapperEvent::swapBlock() noexcept
 {
 //std::cout << "swapBlock() = " << nBlockPosY << '\n';
 	Level& oLevel = level();
 	const NPoint oPos = LevelBlock::blockPos();
-	const int32_t nBlockX = oPos.m_nX;
-	const int32_t nBlockY = nBlockPosY;
+	const int32_t& nBlockX = oPos.m_nX;
+	const int32_t& nBlockY = oPos.m_nY;
 	m_oReciclerTileCoords.create(m_refTileCoords);
 	Tile oOldTile;
 	int32_t nFirstVisibleBrickId = -1;
@@ -485,8 +519,7 @@ bool SwapperEvent::move(Direction::VALUE eDir) noexcept
 	for (const Block::Contact& oContactBrickPos : aContacts) {
 		const int32_t nBoardX = nPosX + oContactBrickPos.m_nRelX;
 		const int32_t nBoardY = nPosY + oContactBrickPos.m_nRelY;
-		if (!( (nBoardX >= m_oData.m_oArea.m_nX) && (nBoardX < m_oData.m_oArea.m_nX + m_oData.m_oArea.m_nW)
-					&& (nBoardY >= m_oData.m_oArea.m_nY) && (nBoardY < m_oData.m_oArea.m_nY + m_oData.m_oArea.m_nH) )) {
+		if (! m_oData.m_oArea.containsPoint(NPoint{nBoardX, nBoardY})) {
 			// cannot move
 //std::cout << "        ::move()  cannot move Contact=(x=" << nBoardX << ",y=" << nBoardY << ")  m_oArea.m_nY=" << m_oArea.m_nY << " m_oArea.m_nH=" << m_oArea.m_nH << '\n';
 			return false; //----------------------------------------------------
@@ -496,6 +529,68 @@ bool SwapperEvent::move(Direction::VALUE eDir) noexcept
 	blockMove(nDx, nDy);
 	return true;
 }
+bool SwapperEvent::moveToXY(double fNewX, double fNewY) noexcept
+{
+	if (m_bSubshowMode) {
+		if (m_nLastLevelPlayer < 0) {
+			return false; //----------------------------------------------------
+		}
+	}
+	Level& oLevel = level();
+	LevelShow& oLevelShow = [&]() -> LevelShow&
+	{
+		if (m_bSubshowMode) {
+			return oLevel.subshowGet(m_nLastLevelPlayer);
+		} else {
+			return oLevel.showGet();
+		}
+	}();
+	const FPoint oBoardNew = oLevelShow.getBoardPos(fNewX, fNewY);
+	int32_t nNewX = oBoardNew.m_fX;
+	int32_t nNewY = oBoardNew.m_fY;
+
+	// Example:
+	//  o...            o: origin
+	//  ..X.            X: oMinPos = (2,1) relative to origin
+	//  ....
+	//  ...Y
+	// (nNewX, nNewY) is where X should be placed
+	// => the new origin position is (nNewX - oMinPos.m_nX, nNewY - oMinPos.m_nY)
+	const Block& oBlock = blockGet();
+	const int32_t nShapeId = blockGetShapeId();
+	NPoint oMinPos = oBlock.shapeMinPos(nShapeId);
+	nNewX -= oMinPos.m_nX;
+	nNewY -= oMinPos.m_nY;
+	const NPoint oMaxPos = oBlock.shapeMaxPos(nShapeId);
+	const int32_t nMaxBoardX = nNewX + oMaxPos.m_nX;
+	const int32_t nMaxBoardY = nNewY + oMaxPos.m_nY;
+	if (! m_oData.m_oArea.containsPoint(NPoint{nMaxBoardX, nMaxBoardY})) {
+		return false; //--------------------------------------------------------
+	}
+	const int32_t nMinBoardX = nNewX + oMinPos.m_nX;
+	const int32_t nMinBoardY = nNewY + oMinPos.m_nY;
+	if (! m_oData.m_oArea.containsPoint(NPoint{nMinBoardX, nMinBoardY})) {
+		return false; //--------------------------------------------------------
+	}
+	const NPoint oPos = LevelBlock::blockPos();
+	const int32_t nDx = nNewX - oPos.m_nX;
+	const int32_t nDy = nNewY - oPos.m_nY;
+	blockMove(nDx, nDy);
+	return true;
+}
+void SwapperEvent::onPlayerChanged() noexcept
+{
+	const int32_t nLevelPlayer = getPlayer();
+	if (nLevelPlayer < 0) {
+		// not controlled
+		return; //--------------------------------------------------------------
+	}
+	if (m_nLastLevelPlayer == nLevelPlayer) {
+		return; //--------------------------------------------------------------
+	}
+	m_nLastLevelPlayer = nLevelPlayer;
+}
+
 int32_t SwapperEvent::blockPosZ() const noexcept
 {
 	return s_nZObjectZSwapper;

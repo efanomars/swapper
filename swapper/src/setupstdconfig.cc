@@ -23,6 +23,8 @@
 #include <stmm-swapper/swapperevent.h>
 
 #include <stmm-games/stdconfig.h>
+#include <stmm-games/options/booloption.h>
+
 #include <stmm-games/appconstraints.h>
 
 #include <stmm-input-ev/stmm-input-ev.h>
@@ -40,7 +42,8 @@ namespace stmg
 {
 
 void swapperSetupStdConfig(shared_ptr<StdConfig>& refStdConfig, const shared_ptr<stmi::DeviceManager>& refDeviceManager
-								, const std::string& sSwapper, const std::string& sAppVersion, bool bNoSound, bool bTestMode) noexcept
+								, const std::string& sSwapper, const std::string& sAppVersion
+								, bool bNoSound, bool bTestMode, bool bTouchMode) noexcept
 {
 	assert(refStdConfig.get() == nullptr);
 	StdConfig::Init oStdConfigInit;
@@ -51,10 +54,25 @@ void swapperSetupStdConfig(shared_ptr<StdConfig>& refStdConfig, const shared_ptr
 	oStdConfigInit.m_bSoundEnabled = ! bNoSound;
 	oStdConfigInit.m_bSoundPerPlayerAllowed = ! bNoSound; // Per player sound is useful for team vs team games
 
+	{
+		{
+		const bool bReadonly = ! bTestMode;
+		const bool bVisible = bTestMode;
+		auto refOption = std::make_shared<BoolOption>(OwnerType::GAME, "TouchMode", bTouchMode, "TouchMode"
+													, bReadonly, bVisible, shared_ptr<Option>{}, std::vector<Variant>{});
+		oStdConfigInit.m_aOptions.push_back(refOption);
+		}
+	}
+
 	oStdConfigInit.m_refDeviceManager = refDeviceManager;
 
 	AppConstraints& oAppConstraints = oStdConfigInit.m_oAppConstraints;
 	oAppConstraints.m_nAIMatesPerTeamMax = 0;
+	if (bTouchMode) {
+		oAppConstraints.m_nPlayersMax = 1;
+		oAppConstraints.m_nTeamsMax = 1;
+		oAppConstraints.m_nMatesPerTeamMax = 1;
+	}
 
 	StdConfig::CapabilityAssignment& oCapabilityAssignment = oStdConfigInit.m_oCapabilityAssignment;
 	oCapabilityAssignment.m_bCapabilitiesAutoAssignedToActivePlayer = true;

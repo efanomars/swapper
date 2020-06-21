@@ -60,7 +60,7 @@ static void printDirectories(const GameDiskFiles& oGameDiskFiles) noexcept
 }
 
 std::string swapperSetup(MainWindowData& oMainWindowData, const std::string& sSwapper, const std::string& sAppVersion
-						, bool bNoSound, bool bTestMode, bool bFullScreen) noexcept
+						, bool bNoSound, bool bTestMode, bool bFullScreen, bool bTouchMode) noexcept
 {
 	stmi::GtkDeviceManager::Init oInit;
 	oInit.m_sAppName = sSwapper;
@@ -76,7 +76,7 @@ std::string swapperSetup(MainWindowData& oMainWindowData, const std::string& sSw
 	}
 
 	shared_ptr<StdConfig>& refStdConfig = oMainWindowData.m_refStdConfig;
-	swapperSetupStdConfig(refStdConfig, refDeviceManager, sSwapper, sAppVersion, bNoSound, bTestMode);
+	swapperSetupStdConfig(refStdConfig, refDeviceManager, sSwapper, sAppVersion, bNoSound, bTestMode, bTouchMode);
 
 	oMainWindowData.m_bFullscreen = bFullScreen;
 	//

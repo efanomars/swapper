@@ -346,7 +346,7 @@
 		</ScrollerEvent>
 
 		<AlarmsEvent evId="EVID-ALARM-ALERT">
-			<SetTicks value="7" repeat="100000"/>
+			<SetTicks value="7" repeat="100000000"/>
 			<Listener groupName="TIMEOUT" event="EVID-BG-ALERT" msgName="IMG_NEXT"/>
 			<Listener groupName="TIMEOUT" event="EVID-ALARM-ALERT" msgName="ALARMS_NEXT"/>
 		</AlarmsEvent>

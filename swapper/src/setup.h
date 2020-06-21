@@ -32,7 +32,7 @@ namespace stmg
  * @return The error string or empty if no error.
  */
 std::string swapperSetup(MainWindowData& oMainWindowData, const std::string& sSwapper, const std::string& sAppVersion
-						, bool bNoSound, bool bTestMode, bool bFullScreen) noexcept;
+						, bool bNoSound, bool bTestMode, bool bFullScreen, bool bTouchMode) noexcept;
 
 } // namespace stmg
 

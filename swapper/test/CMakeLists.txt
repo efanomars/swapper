@@ -44,7 +44,7 @@ if (BUILD_TESTING)
     set(STMMI_TEST_SOURCES
              "${STMMI_TEST_SOURCES_DIR}/testLoadGames.cxx"
            )
-    set(TEST_SWAPPER_REQ_STMM_GAMES_FAKE_VERSION "0.24") # !-U-!
+    set(TEST_SWAPPER_REQ_STMM_GAMES_FAKE_VERSION "0.25") # !-U-!
     set(TEST_SWAPPER_REQ_STMM_INPUT_FAKE_VERSION "0.14") # !-U-!
 
     include(FindPkgConfig)

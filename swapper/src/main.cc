@@ -46,6 +46,8 @@ void printUsage(const std::string& sAppName) noexcept
 	std::cout << "Option:" << '\n';
 	std::cout << "  -h --help        Prints this message." << '\n';
 	std::cout << "  -v --version     Prints version." << '\n';
+	std::cout << "     --touch       Start in touch mode:" << '\n';
+	std::cout << "                   only single player games will be available." << '\n';
 	std::cout << "  -s --no-sound    Disables sound;" << '\n';
 	std::cout << "                   more efficient than setting volume(s) to 0." << '\n';
 	std::cout << "  -f --fullscreen  Start in fullscreen." << '\n';
@@ -71,6 +73,7 @@ int swapperMain(int nArgC, char** aArgV) noexcept
 	bool bNoSound = false;
 	bool bTestMode = false;
 	bool bFullscreen = false;
+	bool bTouchMode = false;
 
 	MainWindowData oMainWindowData;
 
@@ -93,6 +96,7 @@ int swapperMain(int nArgC, char** aArgV) noexcept
 		evalNoArg(nArgC, aArgV, "--no-sound", "-s", bNoSound);
 		evalNoArg(nArgC, aArgV, "--testing", "-t", bTestMode);
 		evalNoArg(nArgC, aArgV, "--fullscreen", "-f", bFullscreen);
+		evalNoArg(nArgC, aArgV, "--touch", "", bTouchMode);
 		//
 		if (nOldArgC == nArgC) {
 			std::cerr << "Unknown argument: " << ((aArgV[1] == nullptr) ? "(null)" : std::string(aArgV[1])) << '\n';
@@ -104,7 +108,8 @@ int swapperMain(int nArgC, char** aArgV) noexcept
 	Glib::RefPtr<Gtk::Application> refApp =
 			Gtk::Application::create("com.efanomars." + sSwapper);
 
-	std::string sErr = swapperSetup(oMainWindowData, sSwapper, sAppVersion, bNoSound, bTestMode, bFullscreen);
+	std::string sErr = swapperSetup(oMainWindowData, sSwapper, sAppVersion
+									, bNoSound, bTestMode, bFullscreen, bTouchMode);
 	if (! sErr.empty()) {
 		std::cerr << sErr << '\n';
 		return EXIT_FAILURE; //-------------------------------------------------

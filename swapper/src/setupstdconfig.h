@@ -39,9 +39,11 @@ using std::shared_ptr;
  * @param sAppVersion Cannot be empty.
  * @param bNoSound Whether sound is disabled.
  * @param bTestMode Whether in test mode.
+ * @param bTouchMode Whether touch input mode.
  */
 void swapperSetupStdConfig(shared_ptr<StdConfig>& refStdConfig, const shared_ptr<stmi::DeviceManager>& refDeviceManager
-							, const std::string& sSwapper, const std::string& sAppVersion, bool bNoSound, bool bTestMode) noexcept;
+							, const std::string& sSwapper, const std::string& sAppVersion
+							, bool bNoSound, bool bTestMode, bool bTouchMode) noexcept;
 
 } // namespace stmg
 

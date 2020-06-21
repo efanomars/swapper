@@ -18,8 +18,11 @@
 <Game _ign_version="1" internalName="Classic2H"  initialInterval="100" difficulty="80">
 	<Description>Classic for up to two players (horizontal areas).</Description>
 	<Description>Align 4 or more tiles of the same color.</Description>
+	<Description>Cannot be played if started with --touch option.</Description>
 	<Author name="Stefano Marsili"  email="stemars@gmx.ch" website="https://efanomars.com"/>
-	<Constraints levels="1" teams="1" matesPerTeamMax="2"/>
+	<Constraints levels="1" teams="1" matesPerTeamMax="2">
+		<Option name="TouchMode" value="false"/>
+	</Constraints>
 	<Variables>
 		<Var name="Points" owner="TEAM" initial="0"/>
 		<Var name="Clock" owner="TEAM" initial="0" addTime="true" timeBase="SEC" timeFormat="MIN_SEC" />
