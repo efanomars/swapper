@@ -4,7 +4,7 @@ swapper (0.25) unstable; urgency=low
   * Adapt to stmm-games API changes
   * Increase minor version
 
- -- Stefano Marsili <efanomars@gmx.ch>  Mon, 22 Jun 2020 19:29:39 +0100
+ -- Stefano Marsili <efanomars@gmx.ch>  Tue, 23 Jun 2020 19:29:39 +0100
 
 swapper (0.24) unstable; urgency=low
 
