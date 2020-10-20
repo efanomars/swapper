@@ -1,5 +1,5 @@
 /*
- * Copyright © 2019  Stefano Marsili, <stemars@gmx.ch>
+ * Copyright © 2019-2020  Stefano Marsili, <stemars@gmx.ch>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -134,7 +134,7 @@ void TopJunkEvent::trigger(int32_t nMsg, int32_t nValue, Event* p0TriggeringEven
 	// ACTIVATE activate event
 	// INIT init
 	// RUN  scroll up if possible
-	// last RUN disactivate, state to INIT
+	// last RUN deactivate, state to INIT
 	//          send messages to finished-group listeners
 	Level& oLevel = level();
 	auto& oGame = oLevel.game();
@@ -266,7 +266,7 @@ void TopJunkEvent::trigger(int32_t nMsg, int32_t nValue, Event* p0TriggeringEven
 					// procrastinate next drop
 					++m_nNextDropTick;
 				} else {
-					// 
+					//
 					if (m_nJunkTilesToDrop > m_nLeftOver) {
 						m_nNextDropTick = calcNextDrop(oGame, nTimer, nCurInterval);
 //std::cout << "TopJunkEvent::trigger 3 -- m_nNextDropTick=" << m_nNextDropTick << " bStillMaterializing=" << bStillMaterializing << '\n';

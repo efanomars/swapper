@@ -1,5 +1,5 @@
 /*
- * Copyright © 2019  Stefano Marsili, <stemars@gmx.ch>
+ * Copyright © 2019-2020  Stefano Marsili, <stemars@gmx.ch>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,10 +23,11 @@
 #include <stmm-swapper/swapperevent.h>
 
 #include <stmm-games-xml-base/xmlcommonerrors.h>
-#include <stmm-games-xml-base/xmlutil//xmlbasicparser.h>
-#include <stmm-games-xml-game/gamectx.h>
+#include <stmm-games-xml-base/xmlutil/xmlbasicparser.h>
 #include <stmm-games-xml-base/xmlconditionalparser.h>
 #include <stmm-games-xml-base/xmltraitsparser.h>
+
+#include <stmm-games-xml-game/gamectx.h>
 
 #include <stmm-games/game.h>
 #include <stmm-games/block.h>

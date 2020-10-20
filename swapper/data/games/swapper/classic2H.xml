@@ -15,6 +15,9 @@
  * You should have received a copy of the GNU General Public
  * License along with this program; if not, see <http://www.gnu.org/licenses/>
 -->
+<!--
+ * File:   classic2H.xml
+-->
 <Game _ign_version="1" internalName="Classic2H"  initialInterval="100" difficulty="80">
 	<Description>Classic for up to two players (horizontal areas).</Description>
 	<Description>Align 4 or more tiles of the same color.</Description>

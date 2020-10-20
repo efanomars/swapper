@@ -15,6 +15,9 @@
  * You should have received a copy of the GNU General Public
  * License along with this program; if not, see <http://www.gnu.org/licenses/>
 -->
+<!--
+ * File:   stony.xml
+-->
 <Game _ign_version="1" internalName="Stony"   initialInterval="100"  testing="false" difficulty="40">
 	<Description>Align 3 or more tiles of the same color.</Description>
 	<Description>The stones are unswappable.</Description>

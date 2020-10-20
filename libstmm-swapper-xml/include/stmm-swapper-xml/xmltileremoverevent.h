@@ -1,5 +1,5 @@
 /*
- * Copyright © 2019  Stefano Marsili, <stemars@gmx.ch>
+ * Copyright © 2019-2020  Stefano Marsili, <stemars@gmx.ch>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ namespace xmlpp { class Element; }
 namespace stmg
 {
 
-class XmlTileRemoverEventParser : public XmlEventParser 
+class XmlTileRemoverEventParser : public XmlEventParser
 {
 public:
 	explicit XmlTileRemoverEventParser(const std::string& sEventName);

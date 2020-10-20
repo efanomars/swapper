@@ -15,6 +15,9 @@
  * You should have received a copy of the GNU General Public
  * License along with this program; if not, see <http://www.gnu.org/licenses/>
 -->
+<!--
+ * File:   libstmm-swapper-xml/data/themes/swapper/simple_s.thm/theme.xml
+-->
 <Theme _ign_version="1" internalName="Simple-S">
 	<Description>Simple - Swapper game theme</Description>
 	<!--Supports>jointris</Supports-->

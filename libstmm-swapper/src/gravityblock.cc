@@ -1,5 +1,5 @@
 /*
- * Copyright © 2019  Stefano Marsili, <stemars@gmx.ch>
+ * Copyright © 2019-2020  Stefano Marsili, <stemars@gmx.ch>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -74,7 +74,7 @@ FPoint GravityBlock::blockVTPos(int32_t nViewTick, int32_t nTotViewTicks) const 
 	const double fPosX = static_cast<double>(oPos.m_nX);
 	double fPosY = static_cast<double>(oPos.m_nY);
 	if (m_bLastFallTick) {
-		fPosY += 1.0 * (-1.0 + ((1.0 + nViewTick) / nTotViewTicks)) * Direction::deltaY(Direction::DOWN); 
+		fPosY += 1.0 * (-1.0 + ((1.0 + nViewTick) / nTotViewTicks)) * Direction::deltaY(Direction::DOWN);
 //std::cout << "GravityBlock(" << getId() << ")::handleTimer(" << level().game().gameElapsed() << ")"<< '\n';
 //std::cout << "GravityBlock::getPosY m_nPosY=" << m_nPosY << "  fPosY=" << fPosY << '\n';
 	}
@@ -298,7 +298,7 @@ void GravityBlock::boardPreInsertUp(int32_t nY, int32_t nX, int32_t nW, const sh
 	}
 }
 void GravityBlock::boardPreDestroy(const Coords& /*oCoords*/) noexcept
-{	
+{
 }
 void GravityBlock::boardPostDestroy(const Coords& /*oCoords*/) noexcept
 {

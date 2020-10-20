@@ -1,5 +1,5 @@
 /*
- * Copyright © 2019  Stefano Marsili, <stemars@gmx.ch>
+ * Copyright © 2019-2020  Stefano Marsili, <stemars@gmx.ch>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -94,7 +94,7 @@ void GravityEvent::trigger(int32_t nMsg, int32_t nValue, Event* p0TriggeringEven
 	// ACTIVATE activate event
 	// INIT init and register
 	// RUN  create gravityblocks if there are gaps underneath
-	// last RUN disactivate, unregister, state to INIT
+	// last RUN deactivate, unregister, state to INIT
 	//          send messages to finished-group listeners
 	Level& oLevel = level();
 	const int32_t nTimer = oLevel.game().gameElapsed();

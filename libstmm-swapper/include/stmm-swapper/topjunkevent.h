@@ -1,5 +1,5 @@
 /*
- * Copyright © 2019  Stefano Marsili, <stemars@gmx.ch>
+ * Copyright © 2019-2020  Stefano Marsili, <stemars@gmx.ch>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ namespace stmg
 using std::shared_ptr;
 using std::unique_ptr;
 
-// Puts tiles according to a random tile generator at a certain row but only if no 
+// Puts tiles according to a random tile generator at a certain row but only if no
 // TILEANI:REMOVING animation is  going on.
 // the junk tiles appear in the least filled columns
 
