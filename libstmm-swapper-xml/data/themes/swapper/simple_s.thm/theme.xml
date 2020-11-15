@@ -88,7 +88,10 @@
 			<Players fromPlayer="-1" toPlayer="3"/>
 		</Assign>
 	</Assigns>
-	<DrawBlockTile>
+
+	<TilePainters>
+
+	<Painter name="PAINTER:BLOCK" default="true">
 		<Conditional>
 			<If><Char charNames="SWAPPER:LEFT,SWAPPER:RIGHT,SQUARSOR:SEL"/></If>
 				<Select>
@@ -113,8 +116,9 @@
 					<Text sizeFactor="100%"/>
 				</Mask>
 		</Conditional>
-	</DrawBlockTile>
-	<DrawBoardTile>
+	</Painter>
+
+	<Painter name="PAINTER:BOARD">
 		<Conditional>
 			<If><Char charName="BOMB"/></If>
 				<Rotate aniName="TILEANI:REMOVING"      _ign_invert="true" _ign_aniFactor="2%">
@@ -163,5 +167,7 @@
 					</SelectAni>
 				</Rotate>
 		</Conditional>
-	</DrawBoardTile>
+	</Painter>
+
+	</TilePainters>
 </Theme>
