@@ -37,57 +37,59 @@ namespace stmg
 namespace AdjRemover
 {
 
-template<class TTiles, class TTileBusy, class TTilesSame>
+// assumes oFromXY is not busy
+template<class TTiles, class TXYBusy, class TTileBusy, class TTilesSame>
 void getCoordsToRemove(NPoint oFromXY, const NRect& oArea
 						, Coords& oToRemove
-						, const TTiles& oTiles, const TTileBusy& oTileBusy
+						, const TTiles& oTiles, const TXYBusy& oXYBusy, const TTileBusy& oTileBusy
 						, const TTilesSame& oTilesSame) noexcept
 {
 	const int32_t& nFromX = oFromXY.m_nX;
 	const int32_t& nFromY = oFromXY.m_nY;
-//std::cout << "AdjRemover::getCoordsToRemove nFromX=" << nFromX << " nFromY=" << nFromY << '\n';
 	const Tile& oTile1 = oTiles(nFromX, nFromY);
 	std::unordered_set< NPoint > oToEval;
 	oToEval.insert(oFromXY);
 
-	while (!oToEval.empty()) {
+	while (! oToEval.empty()) {
 		const NPoint oXY = *oToEval.begin();
 		oToEval.erase(oToEval.begin());
 		const int32_t nX = oXY.m_nX;
 		const int32_t nY = oXY.m_nY;
-//std::cout << "AdjRemover::getCoordsToRemove eval nX=" << nX << " nY=" << nY << '\n';
-		if ((! oTileBusy(nX, nY)) && oTilesSame(oTile1, oTiles(nX, nY))) {
-//std::cout << "AdjRemover::getCoordsToRemove same" << '\n';
-			oToRemove.add(nX, nY);
-			if (nX > oArea.m_nX) {
-				if (! oToRemove.contains(nX - 1, nY)) {
-					oToEval.insert(NPoint{nX - 1, nY});
+		if (! oXYBusy(nX, nY)) {
+			const Tile& oTile2 = oTiles(nX, nY);
+			if ((! oTileBusy(oTile2)) && oTilesSame(oTile1, oTile2)) {
+				oToRemove.add(nX, nY);
+				if (nX > oArea.m_nX) {
+					if (! oToRemove.contains(nX - 1, nY)) {
+						oToEval.insert(NPoint{nX - 1, nY});
+					}
 				}
-			}
-			if (nX < oArea.m_nX + oArea.m_nW - 1) {
-				if (! oToRemove.contains(nX + 1, nY)) {
+				if (nX < oArea.m_nX + oArea.m_nW - 1) {
+					if (! oToRemove.contains(nX + 1, nY)) {
 //std::cout << "AdjRemover::getCoordsToRemove add +1,0" << '\n';
-					oToEval.insert(NPoint{nX + 1, nY});
+						oToEval.insert(NPoint{nX + 1, nY});
+					}
 				}
-			}
-			if (nY > oArea.m_nY) {
-				if (! oToRemove.contains(nX, nY - 1)) {
-					oToEval.insert(NPoint{nX, nY - 1});
+				if (nY > oArea.m_nY) {
+					if (! oToRemove.contains(nX, nY - 1)) {
+						oToEval.insert(NPoint{nX, nY - 1});
+					}
 				}
-			}
-			if (nY < oArea.m_nY + oArea.m_nH - 1) {
-				if (! oToRemove.contains(nX, nY + 1)) {
-					oToEval.insert(NPoint{nX, nY + 1});
+				if (nY < oArea.m_nY + oArea.m_nH - 1) {
+					if (! oToRemove.contains(nX, nY + 1)) {
+						oToEval.insert(NPoint{nX, nY + 1});
+					}
 				}
 			}
 		}
 	}
 }
 
-template<class TTiles, class TTileBusy, class TTilesSame>
+// assumes oFromXY is not busy
+template<class TTiles, class TXYBusy, class TTileBusy, class TTilesSame>
 void getCoordsToRemoveHorizVert(NPoint oFromXY, int32_t nMinLen, const NRect& oArea
 								, Coords& oToRemove
-								, const TTiles& oTiles, const TTileBusy& oTileBusy
+								, const TTiles& oTiles, const TXYBusy& oXYBusy, const TTileBusy& oTileBusy
 								, const TTilesSame& oTilesSame) noexcept
 {
 	assert(nMinLen >= 2);
@@ -113,17 +115,24 @@ void getCoordsToRemoveHorizVert(NPoint oFromXY, int32_t nMinLen, const NRect& oA
 			const int32_t nY = oXY.m_nY;
 			int32_t nEndX = oXY.m_nX + 1;
 			for (; nEndX < oArea.m_nX + oArea.m_nW; ++nEndX) {
-				if ((oTileBusy(nEndX, nY)) || ! oTilesSame(oTile1, oTiles(nEndX, nY))) {
+				if (oXYBusy(nEndX, nY)) {
+					break;
+				}
+				const Tile& oTile2 = oTiles(nEndX, nY);
+				if ((oTileBusy(oTile2)) || ! oTilesSame(oTile1, oTile2)) {
 					break;
 				}
 			}
 			int32_t nStartX = oXY.m_nX - 1;
 			for (; nStartX >= oArea.m_nX; --nStartX) {
-				if ((oTileBusy(nStartX, nY)) || ! oTilesSame(oTile1, oTiles(nStartX, nY))) {
+				if (oXYBusy(nStartX, nY)) {
+					break;
+				}
+				const Tile& oTile2 = oTiles(nStartX, nY);
+				if ((oTileBusy(oTile2)) || ! oTilesSame(oTile1, oTile2)) {
 					break;
 				}
 			}
-	//std::cout << "AdjRemover::getCoordsToRemove nStartX = " << nStartX << "  nEndX = " << nEndX << '\n';
 			if (nEndX - 1 - nStartX >= nMinLen) {
 				for (int32_t nCurX = nStartX + 1; nCurX < nEndX; ++nCurX) {
 					oToRemove.add(nCurX, nY);
@@ -142,13 +151,21 @@ void getCoordsToRemoveHorizVert(NPoint oFromXY, int32_t nMinLen, const NRect& oA
 			const int32_t nX = oXY.m_nX;
 			int32_t nEndY = oXY.m_nY + 1;
 			for (; nEndY < oArea.m_nY + oArea.m_nH; ++nEndY) {
-				if ((oTileBusy(nX, nEndY)) || ! oTilesSame(oTile1, oTiles(nX, nEndY))) {
+				if (oXYBusy(nX, nEndY)) {
+					break;
+				}
+				const Tile& oTile2 = oTiles(nX, nEndY);
+				if ((oTileBusy(oTile2)) || ! oTilesSame(oTile1, oTile2)) {
 					break;
 				}
 			}
 			int32_t nStartY = oXY.m_nY - 1;
 			for (; nStartY >= oArea.m_nY; --nStartY) {
-				if ((oTileBusy(nX, nStartY)) || ! oTilesSame(oTile1, oTiles(nX, nStartY))) {
+				if (oXYBusy(nX, nStartY)) {
+					break;
+				}
+				const Tile& oTile2 = oTiles(nX, nStartY);
+				if ((oTileBusy(oTile2)) || ! oTilesSame(oTile1, oTile2)) {
 					break;
 				}
 			}
@@ -164,6 +181,21 @@ void getCoordsToRemoveHorizVert(NPoint oFromXY, int32_t nMinLen, const NRect& oA
 				oDoneVert.insert(NPoint{nX, nCurY});
 			}
 		}
+	}
+}
+
+// if nMinLen <= 0  blob   else   horiz and vert
+template<class TTiles, class TXYBusy, class TTileBusy, class TTilesSame>
+void getCoordsToRemove(int32_t nMinLen, NPoint oFromXY, const NRect& oArea
+						, Coords& oToRemove
+						, const TTiles& oTiles, const TXYBusy& oXYBusy, const TTileBusy& oTileBusy
+						, const TTilesSame& oTilesSame) noexcept
+{
+	if (nMinLen <= 0) {
+		getCoordsToRemove(oFromXY, oArea, oToRemove, oTiles, oXYBusy, oTileBusy, oTilesSame);
+	} else {
+		getCoordsToRemoveHorizVert(oFromXY, nMinLen, oArea, oToRemove
+									, oTiles, oXYBusy, oTileBusy, oTilesSame);
 	}
 }
 

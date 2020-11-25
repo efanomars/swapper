@@ -148,7 +148,6 @@ Event* XmlSwapperEventParser::parseEventSwapper(GameCtx& oCtx, const xmlpp::Elem
 	const xmlpp::Element* p0ImmovableElement = getXmlConditionalParser().parseUniqueElement(oCtx, p0Element, s_sEventSwapperImmovableNodeName, false);
 	if (p0ImmovableElement != nullptr) {
 		oInit.m_refImmovable = getXmlTraitsParser().parseTileSelectorAnd(oCtx, p0ImmovableElement);
-		//refTileSwapped->dump();
 	}
 	;
 	getXmlConditionalParser().visitNamedElementChildren(oCtx, p0Element, s_sEventSwapperSwappedNodeName, [&](const xmlpp::Element* p0SwappedElement)

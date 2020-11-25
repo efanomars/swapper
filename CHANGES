@@ -1,3 +1,12 @@
+swapper (0.29) unstable; urgency=low
+
+  * Add game half.xml
+  * Add CharRemoverEvent
+  * ColorRemoverEvent and CharRemoverEvent can have irremovable tiles
+  * Increase minor version
+
+ -- Stefano Marsili <efanomars@gmx.ch>  Wed, 25 Nov 2020 19:29:39 +0100
+
 swapper (0.28) unstable; urgency=low
 
   * Use theme painters

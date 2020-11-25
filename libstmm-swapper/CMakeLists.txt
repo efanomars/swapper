@@ -36,6 +36,7 @@ set(STMMI_INCLUDE_DIR  "${PROJECT_SOURCE_DIR}/include")
 set(STMMI_HEADERS_DIR  "${STMMI_INCLUDE_DIR}/stmm-swapper")
 # Header files
 set(STMMI_HEADERS
+        "${STMMI_HEADERS_DIR}/charremoverevent.h"
         "${STMMI_HEADERS_DIR}/colorremoverevent.h"
         "${STMMI_HEADERS_DIR}/destroyerevent.h"
         "${STMMI_HEADERS_DIR}/gravityblock.h"
@@ -52,6 +53,7 @@ set(STMMI_SOURCES_DIR  "${PROJECT_SOURCE_DIR}/src")
 set(STMMI_SOURCES
         "${STMMI_SOURCES_DIR}/adjremover.h"
         "${STMMI_SOURCES_DIR}/adjremover.cc"
+        "${STMMI_SOURCES_DIR}/charremoverevent.cc"
         "${STMMI_SOURCES_DIR}/colorremoverevent.cc"
         "${STMMI_SOURCES_DIR}/destroyerevent.cc"
         "${STMMI_SOURCES_DIR}/gravityblock.cc"

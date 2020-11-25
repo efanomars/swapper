@@ -97,6 +97,9 @@ public:
 		}, [&](int32_t nX, int32_t nY) -> bool
 		{
 			return boardGetBusy(nX, nY);
+		}, [&](const Tile& /*oTile*/) -> bool
+		{
+			return false;
 		}, [&](const Tile& oTile1, const Tile& oTile2) -> bool
 		{
 			return (oTile1.getTileColor() == oTile2.getTileColor());
@@ -111,6 +114,9 @@ public:
 		}, [&](int32_t nX, int32_t nY) -> bool
 		{
 			return boardGetBusy(nX, nY);
+		}, [&](const Tile& /*oTile*/) -> bool
+		{
+			return false;
 		}, [&](const Tile& oTile1, const Tile& oTile2) -> bool
 		{
 			return (oTile1.getTileColor() == oTile2.getTileColor());

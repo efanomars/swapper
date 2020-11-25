@@ -37,6 +37,7 @@ set(STMMI_HEADERS_DIR  "${STMMI_INCLUDE_DIR}/stmm-swapper-xml")
 # Header files
 set(STMMI_HEADERS
         "${STMMI_HEADERS_DIR}/stmm-swapper-xml-config.h"
+        "${STMMI_HEADERS_DIR}/xmlcharremoverevent.h"
         "${STMMI_HEADERS_DIR}/xmlcolorremoverevent.h"
         "${STMMI_HEADERS_DIR}/xmldestroyerevent.h"
         "${STMMI_HEADERS_DIR}/xmlgravityevent.h"
@@ -49,6 +50,7 @@ set(STMMI_HEADERS
 set(STMMI_SOURCES_DIR  "${PROJECT_SOURCE_DIR}/src")
 # Source files (and headers only used for building)
 set(STMMI_SOURCES
+        "${STMMI_SOURCES_DIR}/xmlcharremoverevent.cc"
         "${STMMI_SOURCES_DIR}/xmlcolorremoverevent.cc"
         "${STMMI_SOURCES_DIR}/xmldestroyerevent.cc"
         "${STMMI_SOURCES_DIR}/xmlgravityevent.cc"

@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!--
- * Copyright © 2019-2020  Stefano Marsili, <stemars@gmx.ch>
+ * Copyright © 2020  Stefano Marsili, <stemars@gmx.ch>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,13 +16,14 @@
  * License along with this program; if not, see <http://www.gnu.org/licenses/>
 -->
 <!--
- * File:   blob.xml
+ * File:   half.xml
 -->
-<Game _ign_version="1" internalName="Blob"   initialInterval="100" difficulty="50">
-	<Description>Connect 6 or more tiles of the same color.</Description>
-	<Description>The stones are unswappable.</Description>
-	<Description>If you try to swap them the swapper changes shape.</Description>
-	<Description>The bombs explode when swapped.</Description>
+<Game _ign_version="1" internalName="Half"   initialInterval="100" difficulty="90"
+	  preferBoardPainter="PAINTER:HALFBOARD">
+	<Description>Connect 6 or more tiles with the same color on the left half</Description>
+	<Description>and 6 or more tiles with the same char on the right half.</Description>
+	<Description>The red A is unswappable.</Description>
+	<Description>If you try to swap it the swapper changes shape.</Description>
 	<!-- Inspired by BlockAttack game for Linux-->
 	<Author name="Stefano Marsili"  email="stemars@gmx.ch" website="https://efanomars.com"/>
 	<Constraints levels="1" teams="1" matesPerTeamMax="1"/>
@@ -66,9 +67,9 @@
 		<Board width="8" height="15">
 			<Overlays>
 				<Tiles>
-					<Tile idChar="A" colorPal="2" />
-					<Tile idChar="B" colorPal="3" />
-					<Tile idChar="C" colorPal="4" />
+					<Tile idChar="A" colorPal="5" char="A"/>
+					<Tile idChar="B" colorPal="3" char="B"/>
+					<Tile idChar="C" colorPal="4" char="C"/>
 				</Tiles>
 				<Overlay x="0" y="12" emptyId=" " transparentId=".">
 					<Line>ACBCABAC</Line>
@@ -115,6 +116,14 @@
 		<BackgroundEvent evId="EVID-DARKEN" start="0" posZ="1" posX="0" posY="14" width="8" height="1">
 			<Image imgId="Darkening" width="8" height="1"/>
 		</BackgroundEvent>
+
+		<BackgroundEvent evId="EVID-CENTER" start="0" posZ="-10" posX="3.95" posY="0" width="0.1" height="15">
+			<_Ign_Image imgId="Darkening" width="0.1" height="15"/>
+			<Image imgId="FrameLineV" width="0.1" height="15"/>
+		</BackgroundEvent>
+		<!--StaticGridEvent  start="0" refSys="SHOW" posZ="-10" gridX="3" gridW="2" gridH="14">
+			<Image imgId="SquarePlayer0"/>
+		</StaticGridEvent-->
 
 		<VariableEvent evId="EVID-VAR-CLOCK" name="Clock" team="0" start="0">
 			<Listener groupName="VAR_CHANGED" event="EVID-CC-CLOCK-30SEC" msgName="CUMUL_SET_LEFT_COMPARE"/>
@@ -171,7 +180,7 @@
 
 		<SpeedEvent evId="EVID-SPEED" start="0">
 			<Change repeat="1" _ign_level="1">
-				<Set interval="60" fallEachTicks="6"/>
+				<Set interval="70" fallEachTicks="6"/>
 			</Change>
 			<!--Change repeat="20" _ign_level="2-21">
 				<Inc interval="-2"/>
@@ -188,7 +197,7 @@
 		</DestroyerEvent>
 
 		<SwapperEvent evId="EVID-SWAPPER" start="0" areaY="0" areaH="14" posY="12" block="TheSwapper">
-			<Immovable><Char char="X"/></Immovable>
+			<Immovable><Color colorPal="2"/><Char char="A"/></Immovable>
 			<Swapped><Char charName="BOMB"/></Swapped>
 			<Listener groupName="PUSH_ROW" event="EVID-SCROLLER" msgName="PUSH_ROW"/>
 			<Listener groupName="IMMOVABLE" event="EVID-SWAPPER" msgName="NEXT_SHAPE"/>
@@ -215,29 +224,34 @@
 			</Filter>
             <NewRows>
 				<RandomTiles>
-					<Random prob="100" fromColorPal="2" toColorPal="7"/>
-					<Random prob="6"   fromColorPal="2" toColorPal="7" char="X"/>
-					<Random prob="2"   fromColorPal="2" toColorPal="7" charName="BOMB"/>
+					<Random prob="100" fromColorPal="2" toColorPal="6"
+										fromChar="A" toChar="E"/>
+					<!--Random prob="6"   fromColorPal="2" toColorPal="7" char="X"/>
+					<Random prob="2"   fromColorPal="2" toColorPal="7" charName="BOMB"/-->
 				</RandomTiles>
 				<RandomTiles>
-					<Random prob="100" fromColorPal="2" toColorPal="8"/>
-					<Random prob="6"   fromColorPal="2" toColorPal="8" char="X"/>
-					<Random prob="2"   fromColorPal="2" toColorPal="8" charName="BOMB"/>
+					<Random prob="100" fromColorPal="2" toColorPal="7"
+										fromChar="A" toChar="E"/>
+					<!--Random prob="6"   fromColorPal="2" toColorPal="8" char="X"/>
+					<Random prob="2"   fromColorPal="2" toColorPal="8" charName="BOMB"/-->
 				</RandomTiles>
 				<RandomTiles>
-					<Random prob="100" fromColorPal="2" toColorPal="9"/>
-					<Random prob="6"   fromColorPal="2" toColorPal="9" char="X"/>
-					<Random prob="2"   fromColorPal="2" toColorPal="9" charName="BOMB"/>
+					<Random prob="100" fromColorPal="2" toColorPal="8"
+										fromChar="A" toChar="E"/>
+					<!--Random prob="6"   fromColorPal="2" toColorPal="9" char="X"/>
+					<Random prob="2"   fromColorPal="2" toColorPal="9" charName="BOMB"/-->
 				</RandomTiles>
 				<RandomTiles>
-					<Random prob="100" fromColorPal="2" toColorPal="10"/>
-					<Random prob="16"   fromColorPal="2" toColorPal="10" char="X"/>
-					<Random prob="2"   fromColorPal="2" toColorPal="10" charName="BOMB"/>
+					<Random prob="100" fromColorPal="2" toColorPal="9"
+										fromChar="A" toChar="F"/>
+					<!--Random prob="16"  fromColorPal="2" toColorPal="10" char="X"/>
+					<Random prob="2"   fromColorPal="2" toColorPal="10" charName="BOMB"/-->
 				</RandomTiles>
 				<RandomTiles>
-					<Random prob="100" fromColorPal="2" toColorPal="10"/>
-					<Random prob="26"   fromColorPal="2" toColorPal="10" char="X"/>
-					<Random prob="2"   fromColorPal="2" toColorPal="10" charName="BOMB"/>
+					<Random prob="100" fromColorPal="2" toColorPal="10"
+										fromChar="A" toChar="G"/>
+					<!--Random prob="26"  fromColorPal="2" toColorPal="10" char="X"/>
+					<Random prob="2"   fromColorPal="2" toColorPal="10" charName="BOMB"/-->
 				</RandomTiles>
 				<NewRow>
 					<Rand leaveEmpty="0" randomId="0"/>
@@ -336,7 +350,7 @@
 		</SoundEvent>
 
 		<ColorRemoverEvent evId="EVID-COLOR-REMOVER" start="10" minAdj="6" horizVert="false"
-							areaH="14" deleteAfter="5">
+							areaH="14" areaW="4" deleteAfter="5">
 			<Listener groupName="REMOVED" event="EVID-SCROLLER" msgName="PAUSE_TICKS"/>
 			<Listener groupName="REMOVED" event="EVID-VAR-POINTS" msgName="ADD_VALUE"/>
 			<Listener groupName="REMOVED" event="EVID-VAR-REMOVE-INTERVAL" msgName="VAR_GET_VALUE"/>
@@ -346,6 +360,18 @@
 				</ExistIf>
 			</Listener>
 		</ColorRemoverEvent>
+
+		<CharRemoverEvent evId="EVID-CHAR-REMOVER" start="10" minAdj="6" horizVert="false"
+							areaH="14" areaX="4" areaW="4" deleteAfter="5">
+			<Listener groupName="REMOVED" event="EVID-SCROLLER" msgName="PAUSE_TICKS"/>
+			<Listener groupName="REMOVED" event="EVID-VAR-POINTS" msgName="ADD_VALUE"/>
+			<Listener groupName="REMOVED" event="EVID-VAR-REMOVE-INTERVAL" msgName="VAR_GET_VALUE"/>
+			<Listener groupName="REMOVED" event="EVID-ARRAY-SOUND-NRS" msgName="ARRAY_GET">
+				<ExistIf>
+					<Option name="SoundEnabled" team="" value="true"/>
+				</ExistIf>
+			</Listener>
+		</CharRemoverEvent>
 
 		<ArrayEvent evId="EVID-ARRAY-SOUND-NRS" valueType="SOUND" _ign_DESC="removed lines to sound name index">
 			<ExistIf>
@@ -391,8 +417,8 @@
 				<Input msg="88888" toValue="3000" newMsgName="ADD_VALUE" valuePermill="-75" valueAdd="325" _ign_range="250(1000ms) to 100(3000ms)"/>
 				<Input msg="88888" toValue="5000" newMsgName="ADD_VALUE" valueDiv="-20"     valueAdd="250" _ign_range="100(3000ms) to   0(5000ms)"/>
 				<Input msg="88888"                newMsgName="ADD_VALUE" newValue="0"                      _ign_range="  0(2000ms) to ..."/>
-				<Input msg="88884" toValue="0"   _ign_DESC="suppress"/>
-				<Input msg="88884" fromValue="1" newMsgName="ADD_VALUE" valueMult="1500" _ign_DESC="" />
+				<!--Input msg="88884" toValue="0"   _ign_DESC="suppress"/>
+				<Input msg="88884" fromValue="1" newMsgName="ADD_VALUE" valueMult="1500" _ign_DESC="" /-->
 			</Filter>
 		</VariableEvent>
 
@@ -408,6 +434,12 @@
 			<Listener groupName="COMPARED" event="EVID-VAR-POINTS" msg="88888"/>
 		</CumulCmpEvent>
 		<LogEvent evId="EVID-LOG-CHECK-INTERVAL" toStdOut="true" tag="3939393"/>
+
+		<TileAnimatorEvent start="0" evId="EVID-TA-LEFT" aniName="TILEANI:HALF" repeat="100000" blocks="false"
+					 areaW="4"
+					 initialWaitMillisec="0" durationTicks="1000000">
+			<Select><Not><Tile/></Not></Select>
+		</TileAnimatorEvent>
 
 		<SysEvent evId="EVID-END" type="LEVEL_COMPLETED" team="0" createTexts="true">
 			<Listener groupName="TEAM_FINISHED" event="EVID-SND-GAME-OVER" msgName="PLAY_FREE">

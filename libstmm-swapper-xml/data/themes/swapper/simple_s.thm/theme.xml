@@ -25,6 +25,7 @@
 	<Extends>Simple</Extends>
 	<Images>
 		<Image imgId="Darkening" imgFile="darkening.svg"/>
+		<Image imgId="FrameLineV" imgFile="framelinev.svg"/>
 	</Images>
 	<Sounds>
 		<Sound sndId="BrokenChain" sndFile="bonc.mp3"/>
@@ -167,6 +168,89 @@
 					</SelectAni>
 				</Rotate>
 		</Conditional>
+	</Painter>
+
+	<Painter name="PAINTER:HALFBOARD">
+		<SelectAni aniName="TILEANI:HALF">
+			<Case from="0"><!-- text is semi transparent -->
+				<Rotate aniName="TILEANI:REMOVING"      _ign_invert="true" _ign_aniFactor="2%">
+					<SelectAni aniName="TILEANI:MATERIALIZING">
+						<Case from="0">
+							<Rotate aniName="TILEANI:MATERIALIZING" invert="false"  _ign_aniFactor="50%">
+							<Fade aniName="TILEANI:MATERIALIZING" invert="true"  _ign_aniFactor="50%">
+							<Grow aniName="TILEANI:MATERIALIZING" invert="false"  _ign_aniFactor="50%">
+								<Mask imgFile="squaremask.svg">
+									<Fill/>
+									<Conditional>
+										<If><And><Color colorPal="2"/><Char char="A"/></And></If>
+											<Text sizeFactor="100%"/>
+										<Else/>
+											<Fade aniFactor="60%">
+												<Text sizeFactor="100%"/>
+											</Fade>
+									</Conditional>
+								</Mask>
+							</Grow>
+							</Fade>
+							</Rotate>
+						</Case>
+						<Default>
+							<Mask imgFile="squaremask.svg">
+								<Fill/>
+								<Conditional>
+									<If><And><Color colorPal="2"/><Char char="A"/></And></If>
+										<Text sizeFactor="100%"/>
+									<Else/>
+										<Fade aniFactor="60%">
+											<Text sizeFactor="100%"/>
+										</Fade>
+								</Conditional>
+							</Mask>
+						</Default>
+					</SelectAni>
+				</Rotate>
+			</Case>
+			<Default><!-- fill color is semi transparent -->
+				<Rotate aniName="TILEANI:REMOVING"      _ign_invert="true" _ign_aniFactor="2%">
+					<SelectAni aniName="TILEANI:MATERIALIZING">
+						<Case from="0">
+							<Rotate aniName="TILEANI:MATERIALIZING" invert="false"  _ign_aniFactor="50%">
+							<Fade aniName="TILEANI:MATERIALIZING" invert="true"  _ign_aniFactor="50%">
+							<Grow aniName="TILEANI:MATERIALIZING" invert="false"  _ign_aniFactor="50%">
+								<Mask imgFile="squaremask.svg">
+									<Conditional>
+										<If><And><Color colorPal="2"/><Char char="A"/></And></If>
+											<Fill/>
+											<Text sizeFactor="100%"/>
+										<Else/>
+											<Fade aniFactor="60%">
+												<Fill/>
+											</Fade>
+											<Text sizeFactor="100%" colorName="black"/>
+									</Conditional>
+								</Mask>
+							</Grow>
+							</Fade>
+							</Rotate>
+						</Case>
+						<Default>
+							<Mask imgFile="squaremask.svg">
+								<Conditional>
+									<If><And><Color colorPal="2"/><Char char="A"/></And></If>
+										<Fill/>
+										<Text sizeFactor="100%"/>
+									<Else/>
+										<Fade aniFactor="60%">
+											<Fill/>
+										</Fade>
+										<Text sizeFactor="100%" colorName="black"/>
+								</Conditional>
+							</Mask>
+						</Default>
+					</SelectAni>
+				</Rotate>
+			</Default>
+		</SelectAni>
 	</Painter>
 
 	</TilePainters>

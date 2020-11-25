@@ -20,6 +20,7 @@
 
 #include "setupxmlgameloader.h"
 
+#include <stmm-swapper-xml/xmlcharremoverevent.h>
 #include <stmm-swapper-xml/xmlcolorremoverevent.h>
 #include <stmm-swapper-xml/xmldestroyerevent.h>
 #include <stmm-swapper-xml/xmlgravityevent.h>
@@ -51,6 +52,7 @@ void swapperSetupXmlGameLoader(unique_ptr<XmlGameLoader>& refXmlGameLoader
 	oInit.m_refXmlGameFiles = refGameDiskFiles;
 	//
 	oInit.m_aEventParsers = getXmlStdEventParsers();
+	oInit.m_aEventParsers.push_back(std::make_unique<XmlCharRemoverEventParser>());
 	oInit.m_aEventParsers.push_back(std::make_unique<XmlColorRemoverEventParser>());
 	oInit.m_aEventParsers.push_back(std::make_unique<XmlDestroyerEventParser>());
 	oInit.m_aEventParsers.push_back(std::make_unique<XmlGravityEventParser>());

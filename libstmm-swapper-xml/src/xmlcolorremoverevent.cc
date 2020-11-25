@@ -27,6 +27,7 @@
 #include <stmm-games-xml-base/xmlutil/xmlbasicparser.h>
 #include <stmm-games-xml-game/gamectx.h>
 #include <stmm-games-xml-base/xmlconditionalparser.h>
+#include <stmm-games-xml-base/xmltraitsparser.h>
 
 #include <stmm-games/util/util.h>
 
@@ -39,6 +40,7 @@ namespace stmg
 const std::string XmlColorRemoverEventParser::s_sEventColorRemoverNodeName = "ColorRemoverEvent";
 static const std::string s_sEventColorRemoverMinAdjAttr = "minAdj";
 static const std::string s_sEventColorRemoverHorizVertAttr = "horizVert";
+static const std::string s_sEventColorRemoverIrremovableNodeName = "Irremovable";
 
 XmlColorRemoverEventParser::XmlColorRemoverEventParser()
 : XmlTileRemoverEventParser(s_sEventColorRemoverNodeName)
@@ -67,10 +69,17 @@ Event* XmlColorRemoverEventParser::parseEventColorRemover(GameCtx& oCtx, const x
 		oInit.m_nMinAdj = XmlUtil::strToNumber<int32_t>(oCtx, p0Element, s_sEventColorRemoverMinAdjAttr, sMinAdj, false
 															, true, 2, false, -1);
 	}
+	;
 	const auto oPairHorizVert = getXmlConditionalParser().getAttributeValue(oCtx, p0Element, s_sEventColorRemoverHorizVertAttr);
 	if (oPairHorizVert.first) {
 		oInit.m_bHorizVert = XmlUtil::strToBool(oCtx, p0Element, s_sEventColorRemoverHorizVertAttr, oPairHorizVert.second);
 	}
+	;
+	const xmlpp::Element* p0IrremovableElement = getXmlConditionalParser().parseUniqueElement(oCtx, p0Element, s_sEventColorRemoverIrremovableNodeName, false);
+	if (p0IrremovableElement != nullptr) {
+		oInit.m_refIrremovable = getXmlTraitsParser().parseTileSelectorAnd(oCtx, p0IrremovableElement);
+	}
+
 	oCtx.removeChecker(p0Element, true);
 	auto refColorRemoverEvent = std::make_unique<ColorRemoverEvent>(std::move(oInit));
 	return integrateAndAdd(oCtx, std::move(refColorRemoverEvent), p0Element);

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2019-2020  Stefano Marsili, <stemars@gmx.ch>
+ * Copyright © 2020  Stefano Marsili, <stemars@gmx.ch>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,11 +15,11 @@
  * License along with this program; if not, see <http://www.gnu.org/licenses/>
  */
 /*
- * File:   colorremoverevent.h
+ * File:   charremoverevent.h
  */
 
-#ifndef STMG_COLOR_REMOVER_EVENT_H_
-#define STMG_COLOR_REMOVER_EVENT_H_
+#ifndef STMG_CHAR_REMOVER_EVENT_H_
+#define STMG_CHAR_REMOVER_EVENT_H_
 
 #include "tileremoverevent.h"
 
@@ -40,7 +40,7 @@ using std::unique_ptr;
 
 class ExtendedBoard;
 
-class ColorRemoverEvent : public TileRemoverEvent
+class CharRemoverEvent : public TileRemoverEvent
 {
 public:
 	static constexpr int32_t s_nDefaultMinAdj = 4;
@@ -62,7 +62,7 @@ public:
 	/** Constructor.
 	 * @param oInit The initialization data.
 	 */
-	explicit ColorRemoverEvent(Init&& oInit) noexcept;
+	explicit CharRemoverEvent(Init&& oInit) noexcept;
 
 protected:
 	/** Reinitialization.
@@ -77,12 +77,12 @@ private:
 	bool m_bHasIrremovable;
 
 private:
-	ColorRemoverEvent() = delete;
-	ColorRemoverEvent(const ColorRemoverEvent& oSource) = delete;
-	ColorRemoverEvent& operator=(const ColorRemoverEvent& oSource) = delete;
+	CharRemoverEvent() = delete;
+	CharRemoverEvent(const CharRemoverEvent& oSource) = delete;
+	CharRemoverEvent& operator=(const CharRemoverEvent& oSource) = delete;
 };
 
 } // namespace stmg
 
-#endif	/* STMG_COLOR_REMOVER_EVENT_H_ */
+#endif	/* STMG_CHAR_REMOVER_EVENT_H_ */
 

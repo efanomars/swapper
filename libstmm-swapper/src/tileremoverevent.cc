@@ -197,11 +197,7 @@ int32_t TileRemoverEvent::wouldRemoveTiles(const ExtendedBoard& oBoard, const NR
 
 	assert(m_refWorker.use_count() == 2);
 	m_refWorker->reInit();
-	for (int32_t nX = oExtArea.m_nX; nX < oExtArea.m_nX + oExtArea.m_nW; ++nX) {
-		for (int32_t nY = oExtArea.m_nY; nY < oExtArea.m_nY + oExtArea.m_nH; ++nY) {
-			m_refWorker->add(nX, nY);
-		}
-	}
+	m_refWorker->addRect(oExtArea);
 	int32_t nTotToRemove = 0;
 	while (m_refWorker->size() > 0) {
 		const Coords::const_iterator itW = m_refWorker->begin();

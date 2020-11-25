@@ -1,5 +1,5 @@
 /*
- * Copyright © 2019-2020  Stefano Marsili, <stemars@gmx.ch>
+ * Copyright © 2020  Stefano Marsili, <stemars@gmx.ch>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
  * License along with this program; if not, see <http://www.gnu.org/licenses/>
  */
 /*
- * File:   colorremoverevent.cc
+ * File:   charremoverevent.cc
  */
 
-#include "colorremoverevent.h"
+#include "charremoverevent.h"
 
 #include "adjremover.h"
 
@@ -33,7 +33,7 @@
 namespace stmg
 {
 
-ColorRemoverEvent::ColorRemoverEvent(Init&& oInit) noexcept
+CharRemoverEvent::CharRemoverEvent(Init&& oInit) noexcept
 : TileRemoverEvent(std::move(oInit))
 , m_oData(std::move(oInit))
 , m_bHasIrremovable(m_oData.m_refIrremovable.operator bool())
@@ -41,7 +41,7 @@ ColorRemoverEvent::ColorRemoverEvent(Init&& oInit) noexcept
 	assert(m_oData.m_nMinAdj > 1);
 }
 
-void ColorRemoverEvent::reInit(Init&& oInit) noexcept
+void CharRemoverEvent::reInit(Init&& oInit) noexcept
 {
 	TileRemoverEvent::reInit(std::move(oInit));
 	m_oData = std::move(oInit);
@@ -49,7 +49,7 @@ void ColorRemoverEvent::reInit(Init&& oInit) noexcept
 	m_bHasIrremovable = m_oData.m_refIrremovable.operator bool();
 }
 
-bool ColorRemoverEvent::getCoordsToRemove(NPoint oFromXY, const NRect& oArea, Coords& aToRemove) noexcept
+bool CharRemoverEvent::getCoordsToRemove(NPoint oFromXY, const NRect& oArea, Coords& aToRemove) noexcept
 {
 	Level& oLevel = level();
 	const int32_t nTileAniRemovingIndex = getTileAniRemovingIndex();
@@ -67,7 +67,7 @@ bool ColorRemoverEvent::getCoordsToRemove(NPoint oFromXY, const NRect& oArea, Co
 				return oTile.isEmpty() || m_oData.m_refIrremovable->select(oTile);
 			}, [&](const Tile& oTile1, const Tile& oTile2) -> bool
 			{
-				return (oTile1.getTileColor() == oTile2.getTileColor());
+				return (oTile1.getTileChar() == oTile2.getTileChar());
 			});
 	} else {
 		AdjRemover::getCoordsToRemove(nMinAdj, oFromXY, oArea, aToRemove
@@ -82,7 +82,7 @@ bool ColorRemoverEvent::getCoordsToRemove(NPoint oFromXY, const NRect& oArea, Co
 				return oTile.isEmpty();
 			}, [&](const Tile& oTile1, const Tile& oTile2) -> bool
 			{
-				return (oTile1.getTileColor() == oTile2.getTileColor());
+				return (oTile1.getTileChar() == oTile2.getTileChar());
 			});
 	}
 	if (nMinAdj > 0) {
@@ -91,7 +91,7 @@ bool ColorRemoverEvent::getCoordsToRemove(NPoint oFromXY, const NRect& oArea, Co
 		return (static_cast<int32_t>(aToRemove.size()) >= m_oData.m_nMinAdj);
 	}
 }
-bool ColorRemoverEvent::getCoordsToRemove(NPoint oFromXY, const NRect& oArea, const ExtendedBoard& oBoard, Coords& aToRemove) noexcept
+bool CharRemoverEvent::getCoordsToRemove(NPoint oFromXY, const NRect& oArea, const ExtendedBoard& oBoard, Coords& aToRemove) noexcept
 {
 	const int32_t nTileAniRemovingIndex = getTileAniRemovingIndex();
 	const int32_t nMinAdj = (m_oData.m_bHorizVert ? m_oData.m_nMinAdj : 0);
@@ -108,7 +108,7 @@ bool ColorRemoverEvent::getCoordsToRemove(NPoint oFromXY, const NRect& oArea, co
 				return oTile.isEmpty() || m_oData.m_refIrremovable->select(oTile);
 			}, [&](const Tile& oTile1, const Tile& oTile2) -> bool
 			{
-				return (oTile1.getTileColor() == oTile2.getTileColor());
+				return (oTile1.getTileChar() == oTile2.getTileChar());
 			});
 	} else {
 		AdjRemover::getCoordsToRemove(nMinAdj, oFromXY, oArea, aToRemove
@@ -123,7 +123,7 @@ bool ColorRemoverEvent::getCoordsToRemove(NPoint oFromXY, const NRect& oArea, co
 				return oTile.isEmpty();
 			}, [&](const Tile& oTile1, const Tile& oTile2) -> bool
 			{
-				return (oTile1.getTileColor() == oTile2.getTileColor());
+				return (oTile1.getTileChar() == oTile2.getTileChar());
 			});
 	}
 	if (nMinAdj > 0) {
