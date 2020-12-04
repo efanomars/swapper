@@ -255,9 +255,11 @@
 					<Rand leaveEmpty="0" randomId="4"/>
 				</NewRow>
 			</NewRows>
-			<NewRowChecker tries="5">
-				<ColorRemoverEvent minAdj="5" horizVert="false"
-									areaY="7" areaH="6"/>
+			<NewRowChecker tries="1">
+				<Remover>
+					<ColorRemoverEvent minAdj="5" horizVert="false"
+										areaY="9" areaH="6"/>
+				</Remover>
 			</NewRowChecker>
 			<Listener groupName="TOP_NOT_EMPTY_START" event="EVID-BG-ALERT" msgName="CONTROL_RESTART"/>
 			<Listener groupName="TOP_NOT_EMPTY_START" event="EVID-ALARM-ALERT" msgName="ALARMS_RESTART"/>

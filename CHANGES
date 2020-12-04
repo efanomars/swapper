@@ -1,3 +1,11 @@
+swapper (0.30) unstable; urgency=low
+
+  * half.xml: from letters to numbers
+  * Use inhibitors in half.xml
+  * Increase minor version
+
+ -- Stefano Marsili <efanomars@gmx.ch>  Fri, 04 Dec 2020 19:29:39 +0100
+
 swapper (0.29) unstable; urgency=low
 
   * Add game half.xml

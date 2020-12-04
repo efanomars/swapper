@@ -208,9 +208,11 @@ s					<LevelShowWidget/>
 					<Rand leaveEmpty="0" randomId="4"/>
 				</NewRow>
 			</NewRows>
-			<NewRowChecker tries="5">
-				<ColorRemoverEvent minAdj="4" horizVert="true"
-									areaY="10" areaH="3"/>
+			<NewRowChecker tries="1">
+				<Remover>
+					<ColorRemoverEvent minAdj="4" horizVert="true"
+										areaY="10" areaH="3"/>
+				</Remover>
 			</NewRowChecker>
 			<Listener groupName="TOP_NOT_EMPTY_START" event="EVID-BG-ALERT" msgName="CONTROL_RESTART"/>
 			<Listener groupName="TOP_NOT_EMPTY_START" event="EVID-ALARM-ALERT" msgName="ALARMS_RESTART"/>

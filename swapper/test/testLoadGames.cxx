@@ -132,6 +132,9 @@ protected:
 		oPairGame = m_refXmlGameLoader->getNewGame("Blob", *this, m_refPrefs, oNamed, shared_ptr<stmg::Highscore>{});
 		refGame = std::move(oPairGame.first);
 		REQUIRE(refGame);
+		oPairGame = m_refXmlGameLoader->getNewGame("Half", *this, m_refPrefs, oNamed, shared_ptr<stmg::Highscore>{});
+		refGame = std::move(oPairGame.first);
+		REQUIRE(refGame);
 	}
 	void testOneTeamTwoPlayers()
 	{

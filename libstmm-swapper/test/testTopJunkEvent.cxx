@@ -257,7 +257,7 @@ TEST_CASE_METHOD(STFX<TopJunkEventCase1GameFixture>, "Case1_Choose")
 	REQUIRE( oEntry.m_nLevel == 0 );
 	REQUIRE( oEntry.m_nMsg == 55 );
 	REQUIRE( oEntry.m_nValue == 1 );
-	REQUIRE( oEntry.m_nTriggeringEventAdr == reinterpret_cast<int64_t>(m_p0TopJunkEvent) );
+	REQUIRE( oEntry.m_nTriggeringEventAddr == reinterpret_cast<int64_t>(m_p0TopJunkEvent) );
 }
 
 

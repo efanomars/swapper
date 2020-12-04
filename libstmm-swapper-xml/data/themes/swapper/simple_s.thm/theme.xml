@@ -182,7 +182,7 @@
 								<Mask imgFile="squaremask.svg">
 									<Fill/>
 									<Conditional>
-										<If><And><Color colorPal="2"/><Char char="A"/></And></If>
+										<If><And><Color colorPal="2"/><Char char="1"/></And></If>
 											<Text sizeFactor="100%"/>
 										<Else/>
 											<Fade aniFactor="60%">
@@ -198,7 +198,7 @@
 							<Mask imgFile="squaremask.svg">
 								<Fill/>
 								<Conditional>
-									<If><And><Color colorPal="2"/><Char char="A"/></And></If>
+									<If><And><Color colorPal="2"/><Char char="1"/></And></If>
 										<Text sizeFactor="100%"/>
 									<Else/>
 										<Fade aniFactor="60%">
@@ -219,7 +219,7 @@
 							<Grow aniName="TILEANI:MATERIALIZING" invert="false"  _ign_aniFactor="50%">
 								<Mask imgFile="squaremask.svg">
 									<Conditional>
-										<If><And><Color colorPal="2"/><Char char="A"/></And></If>
+										<If><And><Color colorPal="2"/><Char char="1"/></And></If>
 											<Fill/>
 											<Text sizeFactor="100%"/>
 										<Else/>
@@ -236,7 +236,7 @@
 						<Default>
 							<Mask imgFile="squaremask.svg">
 								<Conditional>
-									<If><And><Color colorPal="2"/><Char char="A"/></And></If>
+									<If><And><Color colorPal="2"/><Char char="1"/></And></If>
 										<Fill/>
 										<Text sizeFactor="100%"/>
 									<Else/>
