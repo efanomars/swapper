@@ -110,7 +110,7 @@
 		</AlarmsEvent>
 		<!--LogEvent evId="EVID-LOG-ALARM-INITIAL" toStdOut="true" tag="9992999"/-->
 
-		<CumulCmpEvent evId="EVID-CC-CLOCK-20SEC" _ign_DESC="fires a 0 for inputs 5 25 45 65 ...">
+		<CumulCmpEvent evId="EVID-CC-CLOCK-20SEC" _ign_DESC="fires for inputs 5 25 45 65 ...">
 			<Filter>
 				<Input msgName="CUMUL_SET_LEFT_COMPARE" fromValue="0" valueMod="20" valueAdd="-5"/>
 			</Filter>

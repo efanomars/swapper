@@ -58,6 +58,7 @@ set(STMMI_SWA_DATA_GAMES_FILES
         "${STMMI_SWA_DATA_GAMES_DIR}/classic2H.xml"
         "${STMMI_SWA_DATA_GAMES_DIR}/half.xml"
         "${STMMI_SWA_DATA_GAMES_DIR}/stony.xml"
+        "${STMMI_SWA_DATA_GAMES_DIR}/stony2H.xml"
         "${STMMI_SWA_DATA_GAMES_DIR}/classicVs.xml"
         "${STMMI_SWA_DATA_GAMES_DIR}/stonyVs.xml"
         )
@@ -67,6 +68,7 @@ set(STMMI_SWA_DATA_GAMES_IMG_FILES
         "${STMMI_SWA_DATA_GAMES_DIR}/classic2H.png"
         "${STMMI_SWA_DATA_GAMES_DIR}/half.png"
         "${STMMI_SWA_DATA_GAMES_DIR}/stony.png"
+        "${STMMI_SWA_DATA_GAMES_DIR}/stony2H.png"
         "${STMMI_SWA_DATA_GAMES_DIR}/classicVs.png"
         "${STMMI_SWA_DATA_GAMES_DIR}/stonyVs.png"
         )

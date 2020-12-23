@@ -481,12 +481,11 @@ bool SwapperEvent::swapBlock() noexcept
 		const int32_t nX = nBlockX + oBrickPos.m_nX;
 		const int32_t nY = nBlockY + oBrickPos.m_nY;
 		m_refTileCoords->add(nX, nY, oOldTile);
-	//std::cout << "boardModify  nX=" << nX << "  nY=" << nY << '\n';
 		oLevel.boardModify(*m_refTileCoords);
 		informListeners(LISTENER_GROUP_SWAPPED, Util::packPointToInt32(NPoint{nX, nY}));
 	}
-	if (! m_oData.m_aSwappedSelectors.empty()) {
-		const int32_t nTotSelectors = static_cast<int32_t>(m_oData.m_aSwappedSelectors.size());
+	const int32_t nTotSelectors = static_cast<int32_t>(m_oData.m_aSwappedSelectors.size());
+	if (nTotSelectors > 0) {
 		for (auto itTiles = m_refTileCoords->begin(); itTiles != m_refTileCoords->end(); itTiles.next()) {
 			const Tile& oTile = itTiles.getTile();
 			const int32_t nX = itTiles.x();

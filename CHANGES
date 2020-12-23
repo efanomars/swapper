@@ -1,3 +1,11 @@
+swapper (0.31) unstable; urgency=low
+
+  * Add stony2H.xml game
+  * Change deault keys
+  * Increase minor version
+
+ -- Stefano Marsili <efanomars@gmx.ch>  Wed, 23 Dec 2020 19:29:39 +0100
+
 swapper (0.30) unstable; urgency=low
 
   * half.xml: from letters to numbers

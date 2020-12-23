@@ -96,7 +96,7 @@ void swapperSetupStdConfig(shared_ptr<StdConfig>& refStdConfig, const shared_ptr
 	aKeyActions.emplace_back(std::vector<std::string>{SwapperEvent::s_sKeyActionDown}, "Down", aDefaultClassKeys);
 	aDefaultClassKeys.clear();
 	//
-	aDefaultClassKeys.push_back(std::make_pair(stmi::KeyCapability::getClass(), std::vector<stmi::HARDWARE_KEY>{stmi::HK_B, stmi::HK_1}));
+	aDefaultClassKeys.push_back(std::make_pair(stmi::KeyCapability::getClass(), std::vector<stmi::HARDWARE_KEY>{stmi::HK_V, stmi::HK_1}));
 	aKeyActions.emplace_back(std::vector<std::string>{SwapperEvent::s_sKeyActionPushRow}, "Push row", aDefaultClassKeys);
 	aDefaultClassKeys.clear();
 	//
@@ -104,7 +104,7 @@ void swapperSetupStdConfig(shared_ptr<StdConfig>& refStdConfig, const shared_ptr
 	aKeyActions.emplace_back(std::vector<std::string>{SwapperEvent::s_sKeyActionSwap}, "Swap", aDefaultClassKeys);
 	aDefaultClassKeys.clear();
 	//
-	aDefaultClassKeys.push_back(std::make_pair(stmi::KeyCapability::getClass(), std::vector<stmi::HARDWARE_KEY>{stmi::HK_N, stmi::HK_TAB}));
+	aDefaultClassKeys.push_back(std::make_pair(stmi::KeyCapability::getClass(), std::vector<stmi::HARDWARE_KEY>{stmi::HK_C, stmi::HK_TAB}));
 	aKeyActions.emplace_back(std::vector<std::string>{SwapperEvent::s_sKeyActionNext}, "Next", aDefaultClassKeys);
 	aDefaultClassKeys.clear();
 	//

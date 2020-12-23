@@ -129,6 +129,9 @@ protected:
 		oPairGame = m_refXmlGameLoader->getNewGame("Stony", *this, m_refPrefs, oNamed, shared_ptr<stmg::Highscore>{});
 		refGame = std::move(oPairGame.first);
 		REQUIRE(refGame);
+		oPairGame = m_refXmlGameLoader->getNewGame("Stony2H", *this, m_refPrefs, oNamed, shared_ptr<stmg::Highscore>{});
+		refGame = std::move(oPairGame.first);
+		REQUIRE(refGame);
 		oPairGame = m_refXmlGameLoader->getNewGame("Blob", *this, m_refPrefs, oNamed, shared_ptr<stmg::Highscore>{});
 		refGame = std::move(oPairGame.first);
 		REQUIRE(refGame);
@@ -142,6 +145,9 @@ protected:
 		auto& oNamed = refTheme->getNamed();
 		shared_ptr<Game> refGame;
 		auto oPairGame = m_refXmlGameLoader->getNewGame("Classic2H", *this, m_refPrefs, oNamed, shared_ptr<stmg::Highscore>{});
+		refGame = std::move(oPairGame.first);
+		REQUIRE(refGame);
+		oPairGame = m_refXmlGameLoader->getNewGame("Stony2H", *this, m_refPrefs, oNamed, shared_ptr<stmg::Highscore>{});
 		refGame = std::move(oPairGame.first);
 		REQUIRE(refGame);
 	}

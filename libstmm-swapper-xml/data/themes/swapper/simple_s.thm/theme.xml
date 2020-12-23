@@ -23,6 +23,13 @@
 	<!--Supports>jointris</Supports-->
 	<Supports>swapper</Supports>
 	<Extends>Simple</Extends>
+	<Fonts>
+		<!--AliasFont name="Pinco" use="Cartoon"/>
+		<DefaultFont use="Pinco"/-->
+		<!--AliasFont name="FA" use="FNoExist"/-->
+		<!--AliasFont name="F2" use="F2"/-->
+		<!--DefaultFont use="FNoExist" /-->
+	</Fonts>
 	<Images>
 		<Image imgId="Darkening" imgFile="darkening.svg"/>
 		<Image imgId="FrameLineV" imgFile="framelinev.svg"/>
